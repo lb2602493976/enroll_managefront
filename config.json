@@ -1,0 +1,6 @@
+{
+    "registryName": "registry.cn-hangzhou.aliyuncs.com/gaoxin/college-admission_back_front",
+    "type": "front",
+    "para": "-p 9457:8080",
+    "containerName": "college-admission_back_front"
+}
