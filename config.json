@@ -1,6 +1,6 @@
 {
-    "registryName": "registry.cn-hangzhou.aliyuncs.com/gaoxin/college-admission_back_front",
+    "registryName": "registry.cn-hangzhou.aliyuncs.com/shundot/enroll_managefront",
     "type": "front",
-    "para": "-p 9457:8080",
-    "containerName": "college-admission_back_front"
+    "para": "-p 9014:8080",
+    "containerName": "enroll_managefront"
 }
