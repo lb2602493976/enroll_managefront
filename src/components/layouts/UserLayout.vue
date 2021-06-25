@@ -26,7 +26,7 @@
 <!--          <a href="https://github.com/zhangdaiscott/jeecg-boot/blob/master/LICENSE" target="_blank">条款</a>-->
 <!--        </div>-->
         <div class="copyright">
-          Copyright &copy; 2021 <a href="#" target="_blank">西安大数网络科技有限公司</a> 出品
+          Copyright &copy; 2021 <a href="#" target="_blank">西安世略英图网络科技公司</a> 出品
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
     mixins: [mixinDevice],
     data () {
       return {
-        url:localStorage.getItem('schoolBackGround') === null ?'https://alipic.lanhuapp.com/xdb36d3480-07a7-401b-9fc6-ae5daac512c0' :localStorage.getItem('schoolBackGround')
+        url:localStorage.getItem('schoolBackGround') === null ?'https://file.yunquewang.cn/group1/default/20210625/11/44/4/pexels-diana-plotkin-1042828.jpg' :localStorage.getItem('schoolBackGround')
       }
     },
     mounted () {

@@ -1,7 +1,7 @@
 <template>
-  <div class="main" style="width: 700px;background-color: #fff">
-    <div style="width: 41%;float: left;">
-      <img src="https://alipic.lanhuapp.com/xd9e708f78-7900-43e7-a20b-fb0cd0eda5a6" width="100%"  />
+  <div class="main" style="width: 600px;background-color: #fff;border-radius:100px;margin-left:300px;opacity:0.6;">
+    <div style="width: 41%;float: left;height:600px;">
+      <img style="border-top-left-radius:100px;border-bottom-left-radius:100px;" src="https://file.yunquewang.cn/group1/default/20210625/11/34/4/format_bg.jpg" width="100%"  height="100%" />
     </div>
     <div style="width: 59%;float: left;padding: 15px;margin: 7% auto;">
       <a-form :form="form" class="user-layout-login" ref="formLogin" id="formLogin">
