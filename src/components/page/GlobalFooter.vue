@@ -11,7 +11,7 @@
     <div class="copyright">
       Copyright
       <a-icon type="copyright"/>
-      2021 <span>西安大数网络科技有限公司 出品</span>
+      2021 <span>西安世略英图网络科技有限公司 出品</span>
     </div>
   </div>
 </template>
