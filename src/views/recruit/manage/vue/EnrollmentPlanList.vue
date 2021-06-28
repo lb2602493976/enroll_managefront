@@ -11,14 +11,14 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('recruit_teacher')">导出</a-button>
+      <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('enrollment_plan')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
-      </a-upload> -->
+      </a-upload>
       <!-- 高级查询区域 -->
-      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
@@ -67,7 +67,7 @@
           </a-button>
         </template>
 
-        <span slot="action" slot-scope="text, record">
+        <!-- <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical" />
@@ -84,12 +84,12 @@
               </a-menu-item>
             </a-menu>
           </a-dropdown>
-        </span>
+        </span> -->
 
       </a-table>
     </div>
 
-    <recruit-teacher-modal ref="modalForm" @ok="modalFormOk"></recruit-teacher-modal>
+    <enrollment-plan-modal ref="modalForm" @ok="modalFormOk"></enrollment-plan-modal>
   </a-card>
 </template>
 
@@ -98,17 +98,17 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import RecruitTeacherModal from './modules/RecruitTeacherModal'
+  import EnrollmentPlanModal from './modules/EnrollmentPlanModal'
 
   export default {
-    name: 'RecruitTeacherList',
+    name: 'EnrollmentPlanList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      RecruitTeacherModal
+      EnrollmentPlanModal
     },
     data () {
       return {
-        description: 'recruit_teacher管理页面',
+        description: 'enrollment_plan管理页面',
         // 表头
         columns: [
           {
@@ -122,57 +122,80 @@
             }
           },
           {
-            title:'姓名',
+            title:'录取批次',
             align:"center",
-            dataIndex: 'name'
+            dataIndex: 'admissionBatch'
           },
           {
-            title:'部门',
+            title:'院系',
             align:"center",
             dataIndex: 'dept'
           },
           {
-            title:'手机号',
+            title:'专业报考代码',
             align:"center",
-            dataIndex: 'phone'
+            dataIndex: 'majorCode'
           },
           {
-            title:'负责区域',
+            title:'专业名称',
             align:"center",
-            dataIndex: 'area'
+            dataIndex: 'majorName'
           },
           {
-            title:'微信url',
+            title:'招生科类',
             align:"center",
-            dataIndex: 'wechatUrl',
-            scopedSlots: { customRender: 'imgSlot' },
+            dataIndex: 'disciplineType'
           },
           {
-            title:'照片url',
+            title:'年份',
             align:"center",
-            dataIndex: 'photoUrl',
-            scopedSlots: { customRender: 'imgSlot' },
+            dataIndex: 'year'
+          },
+          {
+            title:'省份',
+            align:"center",
+            dataIndex: 'provinces'
+          },
+          {
+            title:'招生人数',
+            align:"center",
+            dataIndex: 'enrolment'
+          },
+          {
+            title:'招生类别',
+            align:"center",
+            dataIndex: 'category'
+          },
+          {
+            title:'学制',
+            align:"center",
+            dataIndex: 'educational'
+          },
+          {
+            title:'学费',
+            align:"center",
+            dataIndex: 'tuitionFees'
           },
           // {
           //   title:'租户id（学校id）',
           //   align:"center",
           //   dataIndex: 'tenantId'
           // },
-          {
-            title: '操作',
-            dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' }
-          }
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' }
+          // }
         ],
         url: {
-          list: "/manage/recruitTeacher/list",
-          delete: "/manage/recruitTeacher/delete",
-          deleteBatch: "/manage/recruitTeacher/deleteBatch",
-          exportXlsUrl: "/manage/recruitTeacher/exportXls",
-          importExcelUrl: "manage/recruitTeacher/importExcel",
+          list: "/manage/enrollmentPlan/list",
+          delete: "/manage/enrollmentPlan/delete",
+          deleteBatch: "/manage/enrollmentPlan/deleteBatch",
+          exportXlsUrl: "/manage/enrollmentPlan/exportXls",
+          importExcelUrl: "manage/enrollmentPlan/importExcel",
           
         },
         dictOptions:{},
@@ -192,12 +215,17 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'name',text:'姓名'})
-        fieldList.push({type:'string',value:'dept',text:'部门'})
-        fieldList.push({type:'string',value:'phone',text:'手机号'})
-        fieldList.push({type:'string',value:'area',text:'负责区域'})
-        fieldList.push({type:'string',value:'wechatUrl',text:'微信url'})
-        fieldList.push({type:'string',value:'photoUrl',text:'照片url'})
+        fieldList.push({type:'string',value:'admissionBatch',text:'录取批次'})
+        fieldList.push({type:'string',value:'dept',text:'院系'})
+        fieldList.push({type:'string',value:'majorCode',text:'专业报考代码'})
+        fieldList.push({type:'string',value:'majorName',text:'专业名称'})
+        fieldList.push({type:'string',value:'disciplineType',text:'招生科类'})
+        fieldList.push({type:'string',value:'year',text:'年份'})
+        fieldList.push({type:'string',value:'provinces',text:'省份'})
+        fieldList.push({type:'int',value:'enrolment',text:'招生人数'})
+        fieldList.push({type:'string',value:'category',text:'招生类别'})
+        fieldList.push({type:'string',value:'educational',text:'学制'})
+        fieldList.push({type:'int',value:'tuitionFees',text:'学费'})
         fieldList.push({type:'string',value:'tenantId',text:'租户id（学校id）'})
         this.superFieldList = fieldList
       }

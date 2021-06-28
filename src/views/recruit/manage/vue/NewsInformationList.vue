@@ -12,7 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('recruit_teacher')">导出</a-button>
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('新闻资讯')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
@@ -69,7 +69,7 @@
 
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
-
+          <!-- <a @click="toModulePage(record.id)" >设置内容</a> -->
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
@@ -89,7 +89,8 @@
       </a-table>
     </div>
 
-    <recruit-teacher-modal ref="modalForm" @ok="modalFormOk"></recruit-teacher-modal>
+    <news-information-modal ref="modalForm" @ok="modalFormOk"></news-information-modal>
+    <!-- <recruit-module-modal ref="modalForm" @ok="modalFormOk"></recruit-module-modal> -->
   </a-card>
 </template>
 
@@ -98,17 +99,19 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import RecruitTeacherModal from './modules/RecruitTeacherModal'
+  // import { treeList } from '@/api/api.js'
+  // import RecruitModuleModal from './modules/RecruitModuleModal'
+  import NewsInformationModal from './modules/NewsInformationModal'
 
   export default {
-    name: 'RecruitTeacherList',
+    name: 'NewsInformationList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      RecruitTeacherModal
+      NewsInformationModal
     },
     data () {
       return {
-        description: 'recruit_teacher管理页面',
+        description: '新闻资讯管理页面',
         // 表头
         columns: [
           {
@@ -122,39 +125,25 @@
             }
           },
           {
-            title:'姓名',
+            title:'新闻时间',
             align:"center",
-            dataIndex: 'name'
+            dataIndex: 'pressTime',
+            customRender:function (text) {
+              return !text?"":(text.length>10?text.substr(0,10):text)
+            }
           },
           {
-            title:'部门',
+            title:'类型',
             align:"center",
-            dataIndex: 'dept'
-          },
-          {
-            title:'手机号',
-            align:"center",
-            dataIndex: 'phone'
-          },
-          {
-            title:'负责区域',
-            align:"center",
-            dataIndex: 'area'
-          },
-          {
-            title:'微信url',
-            align:"center",
-            dataIndex: 'wechatUrl',
-            scopedSlots: { customRender: 'imgSlot' },
-          },
-          {
-            title:'照片url',
-            align:"center",
-            dataIndex: 'photoUrl',
-            scopedSlots: { customRender: 'imgSlot' },
+            dataIndex: 'type'
           },
           // {
-          //   title:'租户id（学校id）',
+          //   title:'模块内容',
+          //   align:"center",
+          //   dataIndex: 'content'
+          // },
+          // {
+          //   title:'租户id',
           //   align:"center",
           //   dataIndex: 'tenantId'
           // },
@@ -168,11 +157,11 @@
           }
         ],
         url: {
-          list: "/manage/recruitTeacher/list",
-          delete: "/manage/recruitTeacher/delete",
-          deleteBatch: "/manage/recruitTeacher/deleteBatch",
-          exportXlsUrl: "/manage/recruitTeacher/exportXls",
-          importExcelUrl: "manage/recruitTeacher/importExcel",
+          list: "/manage1/newsInformation/list",
+          delete: "/manage1/newsInformation/delete",
+          deleteBatch: "/manage1/newsInformation/deleteBatch",
+          exportXlsUrl: "/manage1/newsInformation/exportXls",
+          importExcelUrl: "manage1/newsInformation/importExcel",
           
         },
         dictOptions:{},
@@ -181,6 +170,9 @@
     },
     created() {
     this.getSuperFieldList();
+    // treeList().then(res=>{
+    //   console.log(res,'resss')
+    // })
     },
     computed: {
       importExcelUrl: function(){
@@ -190,15 +182,14 @@
     methods: {
       initDictConfig(){
       },
+      
+    
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'name',text:'姓名'})
-        fieldList.push({type:'string',value:'dept',text:'部门'})
-        fieldList.push({type:'string',value:'phone',text:'手机号'})
-        fieldList.push({type:'string',value:'area',text:'负责区域'})
-        fieldList.push({type:'string',value:'wechatUrl',text:'微信url'})
-        fieldList.push({type:'string',value:'photoUrl',text:'照片url'})
-        fieldList.push({type:'string',value:'tenantId',text:'租户id（学校id）'})
+        fieldList.push({type:'date',value:'pressTime',text:'新闻时间'})
+        fieldList.push({type:'string',value:'type',text:'类型',dictCode:'new_types'})
+        fieldList.push({type:'Text',value:'content',text:'模块内容',dictCode:''})
+        fieldList.push({type:'string',value:'tenantId',text:'租户id',dictCode:''})
         this.superFieldList = fieldList
       }
     }

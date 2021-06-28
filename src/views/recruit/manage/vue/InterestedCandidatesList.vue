@@ -11,14 +11,14 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('recruit_teacher')">导出</a-button>
-      <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
+      <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('意向考生登记表')">导出</a-button>
+      <!-- <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
       <!-- 高级查询区域 -->
-      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
@@ -89,7 +89,7 @@
       </a-table>
     </div>
 
-    <recruit-teacher-modal ref="modalForm" @ok="modalFormOk"></recruit-teacher-modal>
+    <interested-candidates-modal ref="modalForm" @ok="modalFormOk"></interested-candidates-modal>
   </a-card>
 </template>
 
@@ -98,17 +98,17 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import RecruitTeacherModal from './modules/RecruitTeacherModal'
+  import InterestedCandidatesModal from './modules/InterestedCandidatesModal'
 
   export default {
-    name: 'RecruitTeacherList',
+    name: 'InterestedCandidatesList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      RecruitTeacherModal
+      InterestedCandidatesModal
     },
     data () {
       return {
-        description: 'recruit_teacher管理页面',
+        description: '意向考生登记表管理页面',
         // 表头
         columns: [
           {
@@ -127,37 +127,45 @@
             dataIndex: 'name'
           },
           {
-            title:'部门',
+            title:'身份证号码',
             align:"center",
-            dataIndex: 'dept'
+            dataIndex: 'idCard'
           },
           {
-            title:'手机号',
+            title:'性别（1：男，2：女）',
+            align:"center",
+            dataIndex: 'gender'
+          },
+          {
+            title:'电话',
             align:"center",
             dataIndex: 'phone'
           },
           {
-            title:'负责区域',
+            title:'qq',
             align:"center",
-            dataIndex: 'area'
+            dataIndex: 'qq'
           },
           {
-            title:'微信url',
+            title:'微信',
             align:"center",
-            dataIndex: 'wechatUrl',
-            scopedSlots: { customRender: 'imgSlot' },
+            dataIndex: 'wechat'
           },
           {
-            title:'照片url',
+            title:'专业集合',
             align:"center",
-            dataIndex: 'photoUrl',
-            scopedSlots: { customRender: 'imgSlot' },
+            dataIndex: 'majors'
           },
-          // {
-          //   title:'租户id（学校id）',
-          //   align:"center",
-          //   dataIndex: 'tenantId'
-          // },
+          {
+            title:'是否接受专业调剂（1：接受，2：不接受）',
+            align:"center",
+            dataIndex: 'status'
+          },
+          {
+            title:'租户id',
+            align:"center",
+            dataIndex: 'tenantId'
+          },
           {
             title: '操作',
             dataIndex: 'action',
@@ -168,11 +176,11 @@
           }
         ],
         url: {
-          list: "/manage/recruitTeacher/list",
-          delete: "/manage/recruitTeacher/delete",
-          deleteBatch: "/manage/recruitTeacher/deleteBatch",
-          exportXlsUrl: "/manage/recruitTeacher/exportXls",
-          importExcelUrl: "manage/recruitTeacher/importExcel",
+          list: "/manage/interestedCandidates/list",
+          delete: "/manage/interestedCandidates/delete",
+          deleteBatch: "/manage/interestedCandidates/deleteBatch",
+          exportXlsUrl: "/manage/interestedCandidates/exportXls",
+          importExcelUrl: "manage/interestedCandidates/importExcel",
           
         },
         dictOptions:{},
@@ -192,13 +200,15 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'name',text:'姓名'})
-        fieldList.push({type:'string',value:'dept',text:'部门'})
-        fieldList.push({type:'string',value:'phone',text:'手机号'})
-        fieldList.push({type:'string',value:'area',text:'负责区域'})
-        fieldList.push({type:'string',value:'wechatUrl',text:'微信url'})
-        fieldList.push({type:'string',value:'photoUrl',text:'照片url'})
-        fieldList.push({type:'string',value:'tenantId',text:'租户id（学校id）'})
+        fieldList.push({type:'string',value:'name',text:'姓名',dictCode:''})
+        fieldList.push({type:'string',value:'idCard',text:'身份证号码',dictCode:''})
+        fieldList.push({type:'string',value:'gender',text:'性别（1：男，2：女）',dictCode:''})
+        fieldList.push({type:'string',value:'phone',text:'电话',dictCode:''})
+        fieldList.push({type:'string',value:'qq',text:'qq',dictCode:''})
+        fieldList.push({type:'string',value:'wechat',text:'微信',dictCode:''})
+        fieldList.push({type:'string',value:'majors',text:'专业集合',dictCode:''})
+        fieldList.push({type:'string',value:'status',text:'是否接受专业调剂（1：接受，2：不接受）',dictCode:''})
+        fieldList.push({type:'string',value:'tenantId',text:'租户id',dictCode:''})
         this.superFieldList = fieldList
       }
     }

@@ -201,8 +201,8 @@ export default {
       this.superFieldList = fieldList
     },
     toModulePage(sysPerId,moduleId) {
-      console.log(sysPerId)
-      console.log(moduleId)
+      console.log(sysPerId,'sysPerId')
+      console.log(moduleId,'moduleId')
       switch (sysPerId) {
         case '1':
           // this.$router.push({ name: 'recruit-manage-vue-RecruitSchoolInfo',params: { moduleId }})

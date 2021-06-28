@@ -9,35 +9,43 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="部门" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="dept">
-              <a-input v-model="model.dept" placeholder="请输入部门"  ></a-input>
+            <a-form-model-item label="身份证号码" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="idCard">
+              <a-input v-model="model.idCard" placeholder="请输入身份证号码"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="手机号" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="phone">
-              <a-input v-model="model.phone" placeholder="请输入手机号"  ></a-input>
+            <a-form-model-item label="性别（1：男，2：女）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="gender">
+              <a-input v-model="model.gender" placeholder="请输入性别（1：男，2：女）"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="负责区域" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="area">
-              <a-input v-model="model.area" placeholder="请输入负责区域"  ></a-input>
+            <a-form-model-item label="电话" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="phone">
+              <a-input v-model="model.phone" placeholder="请输入电话"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="微信url" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="wechatUrl">
-              <!-- <a-input v-model="model.wechatUrl" placeholder="请输入微信url"  ></a-input> -->
-              <j-image-upload isMultiple v-model="model.wechatUrl"></j-image-upload>
+            <a-form-model-item label="qq" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="qq">
+              <a-input v-model="model.qq" placeholder="请输入qq"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="照片url" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="photoUrl">
-              <!-- <a-input v-model="model.photoUrl" placeholder="请输入照片url"  ></a-input> -->
-              <j-image-upload isMultiple v-model="model.photoUrl"></j-image-upload>
+            <a-form-model-item label="微信" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="wechat">
+              <a-input v-model="model.wechat" placeholder="请输入微信"  ></a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-model-item label="专业集合" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="majors">
+              <a-input v-model="model.majors" placeholder="请输入专业集合"  ></a-input>
+            </a-form-model-item>
+          </a-col>
+          <a-col :span="24">
+            <a-form-model-item label="是否接受专业调剂（1：接受，2：不接受）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="status">
+              <a-input v-model="model.status" placeholder="请输入是否接受专业调剂（1：接受，2：不接受）"  ></a-input>
             </a-form-model-item>
           </a-col>
           <!-- <a-col :span="24">
-            <a-form-model-item label="租户id（学校id）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tenantId">
-              <a-input v-model="model.tenantId" placeholder="请输入租户id（学校id）"  ></a-input>
+            <a-form-model-item label="租户id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tenantId">
+              <a-input v-model="model.tenantId" placeholder="请输入租户id"  ></a-input>
             </a-form-model-item>
           </a-col> -->
         </a-row>
@@ -52,7 +60,7 @@
   import { validateDuplicateValue } from '@/utils/util'
 
   export default {
-    name: 'RecruitTeacherForm',
+    name: 'InterestedCandidatesForm',
     components: {
     },
     props: {
@@ -79,9 +87,9 @@
         validatorRules: {
         },
         url: {
-          add: "/manage/recruitTeacher/add",
-          edit: "/manage/recruitTeacher/edit",
-          queryById: "/manage/recruitTeacher/queryById"
+          add: "/manage/interestedCandidates/add",
+          edit: "/manage/interestedCandidates/edit",
+          queryById: "/manage/interestedCandidates/queryById"
         }
       }
     },
