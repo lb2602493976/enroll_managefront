@@ -12,6 +12,14 @@
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="24">
+                  <a-form-model-item label="院系icon图" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="icon">
+                    <!-- <a-input v-model="model.icon" placeholder="请输入院系名称（不超过20个字）"  :maxLength="20"></a-input> -->
+                    <!-- <j-image-logo-upload></j-image-logo-upload> -->
+                    <j-image-logo-upload isMultiple  v-model="model.icon"></j-image-logo-upload>
+
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="24">
                   <a-form-model-item label="院系介绍" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="ciContent">
                     <j-editor v-model="model.ciContent" />
                   </a-form-model-item>
@@ -38,10 +46,12 @@
 
   import { httpAction, getAction } from '@/api/manage'
   import { validateDuplicateValue } from '@/utils/util'
+import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.vue'
 
   export default {
     name: 'RecruitCollegeInfoForm',
     components: {
+        JImageLogoUpload
     },
     props: {
       //表单禁用
@@ -81,6 +91,9 @@
            ],
            ciContent: [
               { required: true, message: '请输入院系介绍!'},
+           ],
+           icon: [
+              { required: true, message: '请选择icon!'},
            ],
         },
         url: {

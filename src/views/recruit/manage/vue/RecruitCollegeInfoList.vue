@@ -137,6 +137,12 @@ export default {
           dataIndex: 'ciMajorNum',
         },
         {
+          title: '图标',
+          align: 'center',
+          dataIndex: 'icon',
+          scopedSlots: { customRender: 'imgSlot' },
+        },
+        {
           title: '操作',
           dataIndex: 'action',
           align: 'center',
