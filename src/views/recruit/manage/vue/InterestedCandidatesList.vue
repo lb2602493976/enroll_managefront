@@ -67,7 +67,7 @@
           </a-button>
         </template>
 
-        <span slot="action" slot-scope="text, record">
+        <!-- <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical" />
@@ -84,7 +84,7 @@
               </a-menu-item>
             </a-menu>
           </a-dropdown>
-        </span>
+        </span> -->
 
       </a-table>
     </div>
@@ -161,19 +161,19 @@
             align:"center",
             dataIndex: 'status'
           },
-          {
-            title:'租户id',
-            align:"center",
-            dataIndex: 'tenantId'
-          },
-          {
-            title: '操作',
-            dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' }
-          }
+          // {
+          //   title:'租户id',
+          //   align:"center",
+          //   dataIndex: 'tenantId'
+          // },
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' }
+          // }
         ],
         url: {
           list: "/manage/interestedCandidates/list",

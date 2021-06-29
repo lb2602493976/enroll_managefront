@@ -13,9 +13,18 @@
               <j-date placeholder="请选择新闻时间" v-model="model.pressTime"  style="width: 100%" />
             </a-form-model-item>
           </a-col>
+
           <a-col :span="24" >
             <a-form-model-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
               <j-dict-select-tag type="list" v-model="model.type" dictCode="new_types" placeholder="请选择新闻资讯模块" />
+            </a-form-model-item>
+          </a-col>
+
+          <a-col :span="24" >
+            <a-form-model-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="title">
+              <!-- <j-date placeholder="请输入标题" v-model="model.title"  style="width: 100%" /> -->
+              <a-input v-model="model.title" placeholder="请输入标题"  ></a-input>
+              <!-- <j-dict-select-tag type="list" v-model="model.title" dictCode="new_types" placeholder="请选择新闻资讯模块" /> -->
             </a-form-model-item>
           </a-col>
           
@@ -115,6 +124,8 @@
            pressTime: [{required: true, message: '新闻时间不能为空！',trigger: 'blur' }],
            type: [{required: true, message: '类型不能为空！',trigger: 'blur' }],
            content: [{required: true, message: '内容不能为空！',trigger: 'blur' }],
+           title: [{required: true, message: '标题不能为空！',trigger: 'blur' }],
+          //  titl
           //  tenantId: [{required: true, message: '验证码不能为空！',trigger: 'blur' }],
           //  cmFile: [
           //     { required: true, message: '请输入附件!'},

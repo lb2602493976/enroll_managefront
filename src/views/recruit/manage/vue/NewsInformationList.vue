@@ -137,6 +137,11 @@
             align:"center",
             dataIndex: 'type'
           },
+          {
+            title:'标题',
+            align:"center",
+            dataIndex: 'title'
+          },
           // {
           //   title:'模块内容',
           //   align:"center",
