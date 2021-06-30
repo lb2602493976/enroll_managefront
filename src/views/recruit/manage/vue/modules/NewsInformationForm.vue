@@ -3,11 +3,11 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
-          <!-- <a-col :span="24">
-            <a-form-model-item label="图标" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="moduleIcon">
-              <j-image-logo-upload isMultiple  v-model="model.moduleIcon"></j-image-logo-upload>
+          <a-col :span="24">
+            <a-form-model-item label="图标" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="icon">
+              <j-image-logo-upload isMultiple  v-model="model.icon"></j-image-logo-upload>
             </a-form-model-item>
-          </a-col> -->
+          </a-col>
           <a-col :span="24">
             <a-form-model-item label="新闻事件" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="pressTime">
               <j-date placeholder="请选择新闻时间" v-model="model.pressTime"  style="width: 100%" />
@@ -125,6 +125,7 @@
            type: [{required: true, message: '类型不能为空！',trigger: 'blur' }],
            content: [{required: true, message: '内容不能为空！',trigger: 'blur' }],
            title: [{required: true, message: '标题不能为空！',trigger: 'blur' }],
+           icon: [{required: true, message: '图标不能为空！',trigger: 'blur' }],
           //  titl
           //  tenantId: [{required: true, message: '验证码不能为空！',trigger: 'blur' }],
           //  cmFile: [

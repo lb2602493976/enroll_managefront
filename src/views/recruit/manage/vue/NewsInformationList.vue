@@ -125,6 +125,12 @@
             }
           },
           {
+            title: '图标',
+            align: 'center',
+            dataIndex: 'icon',
+            scopedSlots: { customRender: 'imgSlot' },
+           },
+          {
             title:'新闻时间',
             align:"center",
             dataIndex: 'pressTime',

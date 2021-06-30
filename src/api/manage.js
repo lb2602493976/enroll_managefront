@@ -179,3 +179,17 @@ export function getFileAccessHttpUrl(avatar,subStr) {
    return;
   }
 }
+
+//上传图片
+export const uploadPhoto = file => {
+  let data = new FormData()
+  data.append('file',file)
+  return axios({
+      url: `${window._CONFIG['domianURL']}/upload/uploadPic`,
+      method: 'post',
+      data,
+      headers:{
+          'Content-Type':'multipart/form-data',
+      },
+  })
+}
