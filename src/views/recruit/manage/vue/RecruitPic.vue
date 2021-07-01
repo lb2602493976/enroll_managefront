@@ -15,20 +15,23 @@
           </a-button>
         </div>
         <a-tabs default-active-key="1" tab-position="left" type="editable-card" @edit="onEdit" @change="change">
-          <template v-for="(item,index) in tabList">
+          <template v-for="(item,index) in tabList"  >
             <a-tab-pane :key=item.id :tab=item.ptName  :closable='item.id !== "1"' >
               <div v-if="item.id === '1'">
-                <div v-for="(items,indexImg) in allPicture">
+                <div v-for="(items,indexImg) in allPicture" :key="indexImg">
                   <h2>
                     {{items.ptName}}
+                    <!-- {{items.name }} -->
                   </h2>
                   <div class="clearfix">
                     <a-upload
                       list-type="picture"
+                      :action="items.picList.url"
                       :file-list="items.picList"
                       class="upload-list-inline"
                       @preview="handlePreview"
                       @change="handleChangedelete"
+                      
                     >
                     </a-upload>
                     <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
@@ -38,7 +41,7 @@
                 </div>
               </div>
               <div v-else>
-                <div v-for="(items,indexImg) in allPicture">
+                <div v-for="(items,indexImg) in allPicture" :key="indexImg">
                   <h2>
                     {{items.ptName}}
                   </h2>
@@ -141,7 +144,7 @@
     },
     data () {
       return {
-        uploadAction:window._CONFIG['domianURL']+"/sys/common/upload",
+        uploadAction:window._CONFIG['domianURL']+"/upload/uploadPic",
         preview:window._CONFIG['domianURL']+"/sys/common/static/",
         headers:{
           'X-Access-Token' : this.$ls.get(ACCESS_TOKEN)
@@ -244,11 +247,14 @@
               if(item.picList.length > 0){
                 const aa = []
                 item.picList.map((items,index)=>{
+                  console.log(items,'ssssss')
                   aa.push({
                     uid: -`${index}`,
                     id: items.id,
-                    name: `${items.picTime} -${items.picUrl}`,
-                    url: `${this.preview}${items.picUrl}`,
+                    // name: `${items.picTime} -${items.picUrl}`,
+                    // url: `${this.preview}${items.picUrl}`,
+                    name: `${items.createTime}`,
+                    url: `${items.picUrl}`,
                   })
                 })
                 a.push({
@@ -264,8 +270,11 @@
                 })
               }
             })
+            console.log(a,'picur')
+            // this.allPicture = a
             this.allPicture = a
-            console.log(this.allPicture)
+             console.log(this.allPicture,'picur21312312')
+            
           })
           .catch((err) => {
             console.log(err)
@@ -407,35 +416,55 @@
         this.previewVisible = false;
       },
       async handlePreview(file) {
+        // console.log(file,'321312312312312312312312')
         if (!file.url && !file.preview) {
           file.preview = await getBase64(file.originFileObj);
         }
         this.previewImage = file.url || file.preview;
+        // console.log(this.previewImage ,'6321312312312332131212312312312')
         this.previewVisible = true;
       },
       handleChange(info) {
         let fileList = info.fileList
-        if (info.file.status !== 'uploading') {
-          console.log('正在上传');
-        }
+        // if (info.file.status !== 'uploading') {
+        //   console.log('正在上传');
+        //   return;
+        // }
+        // if (info.file.status === 'done') {
+        //   if(info.file.response.success){
+        //     fileList = fileList.map((file) => {
+        //       if (file.response) {
+        //         file.url = file.response.message;
+        //       }
+        //       return file;
+        //     });
+        //   }
+        //   this.imgList = fileList
+        //   this.uploadFileList.push(info.file.response.message)
+        //   this.$message.success(`${info.file.name} 上传成功`);
+        // } else if (info.file.status === 'error') {
+        //   this.$message.error(`${info.file.name} 上传失败.`);
+        // }
         if (info.file.status === 'done') {
-          if(info.file.response.success){
+          if(info.file.response){
             fileList = fileList.map((file) => {
+              // console.log(file,'filelist->item')
               if (file.response) {
-                file.url = file.response.message;
+                file.response.url = file.response.url;
               }
+              // console.log(file,'filelist->item')
               return file;
             });
           }
           this.imgList = fileList
-          this.uploadFileList.push(info.file.response.message)
+          this.uploadFileList.push(info.file.response.url)
           this.$message.success(`${info.file.name} 上传成功`);
         } else if (info.file.status === 'error') {
           this.$message.error(`${info.file.name} 上传失败.`);
         }
       },
       handleChangedelete(info){
-        console.log(info.file)
+        // console.log(info.file)
         if(info.file.status === 'removed'){
           axios
             .delete(`/manage/recruitPicAbout/delete?id=${info.file.id}`)

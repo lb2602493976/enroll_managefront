@@ -8,7 +8,7 @@ const api = {
   permission: '/mock/api/permission',
   permissionNoPager: '/mock/api/permission/no-pager'
 }
-
+const BASE_API=window._CONFIG['domianURL']
 export default api
 
 //post
@@ -185,7 +185,21 @@ export const uploadPhoto = file => {
   let data = new FormData()
   data.append('file',file)
   return axios({
-      url: `${window._CONFIG['domianURL']}/upload/uploadPic`,
+      url: `${BASE_API}/upload/uploadPic`,
+      method: 'post',
+      data,
+      headers:{
+          'Content-Type':'multipart/form-data',
+      },
+  })
+}
+
+//上传视频
+export const uploadVideo = file => {
+  let data = new FormData()
+  data.append('file',file)
+  return axios({
+      url: `${BASE_API}/upload/uploadFile`,
       method: 'post',
       data,
       headers:{

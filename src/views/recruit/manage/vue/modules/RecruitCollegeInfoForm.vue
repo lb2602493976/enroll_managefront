@@ -17,6 +17,7 @@
                     <!-- <j-image-logo-upload></j-image-logo-upload> -->
                     <!-- <j-image-logo-upload isMultiple  v-model="model.icon"></j-image-logo-upload> -->
                       <a-upload
+                        style="width: 128px;height: 128px;"
                         name="file"
                         list-type="picture-card"
                         v-model="model.icon"
@@ -24,9 +25,10 @@
                         :show-upload-list="false"
                         :action="`${BASE_API}/upload/uploadPic`"
                         @change="handleChange"
+                        :before-upload="beforeUpload"
                       >
-                      <!-- :before-upload="beforeUpload" -->
-                        <img v-if="imageUrl" :src="imageUrl" alt="avatar" />
+                      
+                        <img style="width: 128px;height: 128px;" v-if="model.icon" :src="model.icon" alt="avatar" />
                         <div v-else>
                           <a-icon :type="loading ? 'loading' : 'plus'" />
                           <div class="ant-upload-text">
@@ -82,7 +84,6 @@ import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.v
       model: {
         handler(newName) {
           console.log(newName,'newName')
-          // newName.icon=this.imageUrl
           let a = newName.ciContent
           document.getElementsByClassName('aa')[0].innerHTML = a
         },
@@ -91,7 +92,7 @@ import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.v
     },
     data () {
       return {
-        imageUrl : '',
+        // imageUrl : '',
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
         model:{
@@ -136,22 +137,29 @@ import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.v
     },
     methods: {
       handleChange(info) {
-        // console.log(info.file.response,'info')
-        this.imageUrl=info.file.response.url
-        this.model.icon=info.file.response.url
-        // if (info.file.status === 'uploading') {
-        //   this.loading = true;
-        //   return;
-        // }
-        // if (info.file.status === 'done') {
-          // Get this url from response in real world.
-          // getBase64(info.file.originFileObj, imageUrl => {
-          //   this.imageUrl = imageUrl;
-          //   this.loading = false;
-          // });
-
-        // }
+        if (info.file.status === 'uploading') {
+          this.loading = true;
+          return;
+        }
+        if (info.file.status === 'done') {
+           console.log(info.file,'info')
+          this.model.icon=info.file.response.url
+        }
       },
+      // 限制图片大小
+      beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          this.$message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        console.log(isLt2M,'2M')
+        if (!isLt2M) {
+          this.$message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+      },
+
       add () {
         this.edit(this.modelDefault);
       },

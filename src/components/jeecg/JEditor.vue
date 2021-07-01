@@ -73,17 +73,38 @@
             formData.append('file', blobInfo.blob(), blobInfo.filename());
             formData.append('biz', "jeditor");
             formData.append("jeditor","1");
-            uploadAction(window._CONFIG['domianURL']+"/sys/common/upload", formData).then((res) => {
-              if (res.success) {
-                if(res.message == 'local'){
-                  const img = 'data:image/jpeg;base64,' + blobInfo.base64()
-                  success(img)
-                }else{
-                  let img = getFileAccessHttpUrl(res.message)
+            // 人家的
+            // uploadAction(window._CONFIG['domianURL']+"/sys/common/upload", formData).then((res) => {
+            //   console.log(res,'1')
+            //   if (res.success) {
+            //     if(res.message == 'local'){
+            //       console.log(res,'2')
+            //       const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+            //       success(img)
+            //     }else{
+            //       console.log(res,'3')
+            //       let img = getFileAccessHttpUrl(res.message)
+            //       success(img)
+            //     }
+            //   }
+            // })
+            //我的
+            uploadAction(window._CONFIG['domianURL']+"/upload/uploadPic", formData).then((res) => {
+              console.log(res,'1')
+              if (res) {
+                // if(res.message == 'local'){
+                //   console.log(res,'2')
+                //   const img = 'data:image/jpeg;base64,' + blobInfo.base64()
+                //   success(img)
+                // }else{
+                //   console.log(res,'3')
+                  let img = getFileAccessHttpUrl(res.url)
                   success(img)
                 }
-              }
+              // }
             })
+            
+
           }
         },
         myValue: this.value,
