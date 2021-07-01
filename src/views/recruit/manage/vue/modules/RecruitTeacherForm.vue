@@ -26,13 +26,53 @@
           <a-col :span="24">
             <a-form-model-item label="微信url" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="wechatUrl">
               <!-- <a-input v-model="model.wechatUrl" placeholder="请输入微信url"  ></a-input> -->
-              <j-image-upload isMultiple v-model="model.wechatUrl"></j-image-upload>
+              <!-- <j-image-upload isMultiple v-model="model.wechatUrl"></j-image-upload> -->
+              <a-upload
+                style="width: 128px;height: 128px;"
+                name="file"
+                list-type="picture-card"
+                v-model="model.wechatUrl"
+                class="avatar-uploader"
+                :show-upload-list="false"
+                :action="`${BASE_API}/upload/uploadPic`"
+                @change="handleChange"
+                :before-upload="beforeUpload"
+              >
+              
+                <img style="width: 128px;height: 128px;" v-if="model.wechatUrl" :src="model.wechatUrl" alt="avatar" />
+                <div v-else>
+                  <a-icon :type="loading ? 'loading' : 'plus'" />
+                  <div class="ant-upload-text">
+                    Upload
+                  </div>
+                </div>
+              </a-upload>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
             <a-form-model-item label="照片url" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="photoUrl">
               <!-- <a-input v-model="model.photoUrl" placeholder="请输入照片url"  ></a-input> -->
-              <j-image-upload isMultiple v-model="model.photoUrl"></j-image-upload>
+              <!-- <j-image-upload isMultiple v-model="model.photoUrl"></j-image-upload> -->
+              <a-upload
+                style="width: 128px;height: 128px;"
+                name="file"
+                list-type="picture-card"
+                v-model="model.photoUrl"
+                class="avatar-uploader"
+                :show-upload-list="false"
+                :action="`${BASE_API}/upload/uploadPic`"
+                @change="handleChange1"
+                :before-upload="beforeUpload1"
+              >
+              
+                <img style="width: 128px;height: 128px;" v-if="model.photoUrl" :src="model.photoUrl" alt="avatar" />
+                <div v-else>
+                  <a-icon :type="loading1 ? 'loading' : 'plus'" />
+                  <div class="ant-upload-text">
+                    Upload
+                  </div>
+                </div>
+              </a-upload>
             </a-form-model-item>
           </a-col>
           <!-- <a-col :span="24">
@@ -65,6 +105,9 @@
     },
     data () {
       return {
+        BASE_API:window._CONFIG['domianURL'],
+        loading : false,
+        loading1 : false,
         model:{
          },
         labelCol: {
@@ -95,6 +138,56 @@
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
     },
     methods: {
+      //微信
+       handleChange(info) {
+        if (info.file.status === 'uploading') {
+          this.loading = true;
+          return;
+        }
+        if (info.file.status === 'done') {
+           console.log(info.file,'info')
+          this.model.wechatUrl=info.file.response.url
+        }
+      },
+      // 限制图片大小
+      beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          this.$message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        console.log(isLt2M,'2M')
+        if (!isLt2M) {
+          this.$message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+      },
+      
+      //图片
+       handleChange1(info) {
+        if (info.file.status === 'uploading') {
+          this.loading1 = true;
+          return;
+        }
+        if (info.file.status === 'done') {
+           console.log(info.file,'info')
+          this.model.photoUrl=info.file.response.url
+        }
+      },
+      // 限制图片大小
+      beforeUpload1(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          this.$message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        console.log(isLt2M,'2M')
+        if (!isLt2M) {
+          this.$message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+      },
+
       add () {
         this.edit(this.modelDefault);
       },

@@ -5,7 +5,27 @@
         <a-row>
           <a-col :span="24">
             <a-form-model-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="picUrl">
-              <j-image-upload isMultiple v-model="model.picUrl"></j-image-upload>
+              <!-- <j-image-upload isMultiple v-model="model.picUrl"></j-image-upload> -->
+              <a-upload
+                style="width: 128px;height: 128px;"
+                name="file"
+                list-type="picture-card"
+                v-model="model.picUrl"
+                class="avatar-uploader"
+                :show-upload-list="false"
+                :action="`${BASE_API}/upload/uploadPic`"
+                @change="handleChange"
+                :before-upload="beforeUpload"
+              >
+              
+                <img style="width: 128px;height: 128px;" v-if="model.picUrl" :src="model.picUrl" alt="avatar" />
+                <div v-else>
+                  <a-icon :type="loading ? 'loading' : 'plus'" />
+                  <div class="ant-upload-text">
+                    Upload
+                  </div>
+                </div>
+              </a-upload>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
@@ -89,6 +109,8 @@
     },
     data() {
       return {
+        BASE_API:window._CONFIG['domianURL'],
+        loading : false,
         detailIdDisabled:false,
         model: {},
         labelCol: {
@@ -138,6 +160,30 @@
       this.getSelect()
     },
     methods: {
+       handleChange(info) {
+        if (info.file.status === 'uploading') {
+          this.loading = true;
+          return;
+        }
+        if (info.file.status === 'done') {
+           console.log(info.file,'info')
+          this.model.picUrl=info.file.response.url
+        }
+      },
+      // 限制图片大小
+      beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          this.$message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        console.log(isLt2M,'2M')
+        if (!isLt2M) {
+          this.$message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+      },
+
       add() {
         this.edit(this.modelDefault)
       },

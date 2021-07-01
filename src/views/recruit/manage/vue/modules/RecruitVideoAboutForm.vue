@@ -28,10 +28,11 @@
                         @change="handleChangeVideo"
                         accept="video/*"
                       >
-                      
-                        <img style="width: 128px;height: 128px;" v-if="model.vaUrl" :src="model.vaUrl" alt="avatar" />
+                        <!-- <video style="width: 128px;height: 128px;" v-if="model.vaUrl" :src="model.vaUrl" alt="avatar" /> -->
+                        <p v-if="model.vaUrl"  alt="avatar" >{{model.vaUrl}}</p>
+                        
                         <div v-else>
-                          <a-icon :type="loading ? 'loading' : 'plus'" />
+                          <a-icon :type="loading1 ? 'loading1' : 'plus'" />
                           <div class="ant-upload-text">
                             Upload
                           </div>
@@ -54,7 +55,7 @@
                         :before-upload="beforeUpload"
                       >
                       
-                        <video style="width: 128px;height: 128px;" v-if="model.vaCover" :src="model.vaCover" alt="avatar" />
+                        <img style="width: 128px;height: 128px;" v-if="model.vaCover" :src="model.vaCover" alt="avatar" />
                         <div v-else>
                           <a-icon :type="loading ? 'loading' : 'plus'" />
                           <div class="ant-upload-text">
@@ -108,6 +109,7 @@
       return {
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
+        loading1 : false,
         model:{
           vaContent:''
          },
@@ -166,7 +168,7 @@
       //上传视频
       handleChangeVideo(info){
         if (info.file.status === 'uploading') {
-          this.loading = true;
+          this.loading1 = true;
           return;
         }
         if (info.file.status === 'done') {

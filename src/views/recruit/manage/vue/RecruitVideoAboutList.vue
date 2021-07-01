@@ -154,11 +154,11 @@
             align:"center",
             dataIndex: 'vaPageView'
           },
-          {
-            title:'视频大小（M）',
-            align:"center",
-            dataIndex: 'vaSize'
-          },
+          // {
+          //   title:'视频大小（M）',
+          //   align:"center",
+          //   dataIndex: 'vaSize'
+          // },
           {
             title: '操作',
             dataIndex: 'action',
