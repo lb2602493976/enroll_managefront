@@ -23,7 +23,8 @@
                 </a-col>
                 <a-col :span="24">
                   <a-form-model-item label="名师介绍" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tiContent">
-                    <j-editor v-model="model.tiContent" />
+                    <!-- <j-editor v-model="model.tiContent" /> -->
+                    <a-input v-model="model.tiContent" placeholder="请输入名师介绍"  ></a-input>
                   </a-form-model-item>
                 </a-col>
                 <a-col :span="24">
