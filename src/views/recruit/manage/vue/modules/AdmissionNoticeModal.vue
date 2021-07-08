@@ -8,22 +8,22 @@
     :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
     @cancel="handleCancel"
     cancelText="关闭">
-    <recruit-teacher-info-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></recruit-teacher-info-form>
+    <admission-notice-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></admission-notice-form>
   </j-modal>
 </template>
 
 <script>
 
-  import RecruitTeacherInfoForm from './RecruitTeacherInfoForm'
+  import AdmissionNoticeForm from './AdmissionNoticeForm'
   export default {
-    name: 'RecruitTeacherInfoModal',
+    name: 'AdmissionNoticeModal',
     components: {
-      RecruitTeacherInfoForm
+      AdmissionNoticeForm
     },
     data () {
       return {
         title:'',
-        width:1400,
+        width:800,
         visible: false,
         disableSubmit: false
       }
@@ -39,7 +39,6 @@
         this.visible=true
         this.$nextTick(()=>{
           this.$refs.realForm.edit(record);
-          console.log(record,'model222')
         })
       },
       close () {
