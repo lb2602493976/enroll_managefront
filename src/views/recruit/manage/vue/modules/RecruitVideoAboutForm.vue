@@ -52,7 +52,6 @@
                         :show-upload-list="false"
                         :action="`${BASE_API}/upload/uploadPic`"
                         @change="handleChange"
-                        :before-upload="beforeUpload"
                       >
                       
                         <img style="width: 128px;height: 128px;" v-if="model.vaCover" :src="model.vaCover" alt="avatar" />
