@@ -3,6 +3,12 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
+          <a-col :span="24" >
+            <a-form-model-item label="问题类型" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
+              <j-dict-select-tag type="list" v-model="model.type" dictCode="ai_types" placeholder="请选择问题类型" />
+            </a-form-model-item>
+          </a-col>
+
           <a-col :span="24">
             <a-form-model-item label="问题描述" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="aiTitle">
               <a-input v-model="model.aiTitle" placeholder="请输入问题描述（不超过100个字）" :maxLength="100" ></a-input>

@@ -125,6 +125,11 @@ export default {
           },
         },
         {
+          title: '问题类型',
+          align: 'center',
+          dataIndex: 'type',
+        },
+        {
           title: '问题描述',
           align: 'center',
           dataIndex: 'aiTitle',
