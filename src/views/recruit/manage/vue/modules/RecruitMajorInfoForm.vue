@@ -8,6 +8,31 @@
             <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
               <a-row>
                 <a-col :span="24">
+                  <a-form-model-item label="专业封面照片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="cover">
+                    <!--              <j-image-upload isMultiple  v-model="model.tiPhoto" ></j-image-upload>-->
+                    <!-- <j-image-logo-upload isMultiple  v-model="model.tiPhoto" ></j-image-logo-upload> -->
+                    <a-upload
+                        style="width: 128px;height: 128px;"
+                        name="file"
+                        list-type="picture-card"
+                        v-model="model.cover"
+                        class="avatar-uploader"
+                        :show-upload-list="false"
+                        :action="`${BASE_API}/upload/uploadPic`"
+                        @change="handleChange"
+                      >
+                      
+                        <img style="width: 128px;height: 128px;" v-if="model.cover" :src="model.cover" alt="avatar" />
+                        <div v-else>
+                          <a-icon :type="loading ? 'loading' : 'plus'" />
+                          <div class="ant-upload-text">
+                            Upload
+                          </div>
+                        </div>
+                      </a-upload>
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="24">
                   <a-form-model-item label="专业名称" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="miName">
                     <a-input v-model="model.miName" placeholder="请输入专业名称（不超过20个字）" :maxLength="20" ></a-input>
                   </a-form-model-item>
@@ -59,6 +84,8 @@
     },
     data () {
       return {
+        BASE_API:window._CONFIG['domianURL'],
+        loading : false,
         model:{
           miContent:''
          },
@@ -108,6 +135,29 @@
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
     },
     methods: {
+      handleChange(info) {
+        if (info.file.status === 'uploading') {
+          this.loading = true;
+          return;
+        }
+        if (info.file.status === 'done') {
+           console.log(info.file,'info')
+          this.model.cover=info.file.response.url
+        }
+      },
+      // 限制图片大小
+      beforeUpload(file) {
+        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        if (!isJpgOrPng) {
+          this.$message.error('You can only upload JPG file!');
+        }
+        const isLt2M = file.size / 1024 / 1024 < 2;
+        console.log(isLt2M,'2M')
+        if (!isLt2M) {
+          this.$message.error('Image must smaller than 2MB!');
+        }
+        return isJpgOrPng && isLt2M;
+      },
       add () {
         this.edit(this.modelDefault);
       },

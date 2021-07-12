@@ -11,8 +11,8 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">添加专业</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('专业信息表')">导出</a-button>
+      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('小程序key')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
@@ -43,8 +43,8 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        class="j-table-force-nowrap"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
         @change="handleTableChange">
 
         <template slot="htmlSlot" slot-scope="text">
@@ -70,7 +70,7 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <!-- <a-divider type="vertical" />
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -83,13 +83,13 @@
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>
-          </a-dropdown> -->
+          </a-dropdown>
         </span>
 
       </a-table>
     </div>
 
-    <recruit-major-info-modal ref="modalForm" @ok="modalFormOk"></recruit-major-info-modal>
+    <app-key-modal ref="modalForm" @ok="modalFormOk"></app-key-modal>
   </a-card>
 </template>
 
@@ -98,22 +98,21 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import RecruitMajorInfoModal from './modules/RecruitMajorInfoModal'
-  import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
+  import AppKeyModal from './modules/AppKeyModal'
 
   export default {
-    name: 'RecruitMajorInfoList',
+    name: 'AppKeyList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      RecruitMajorInfoModal
+      AppKeyModal
     },
     data () {
       return {
-        description: '专业信息表管理页面',
+        description: '小程序key管理页面',
         // 表头
         columns: [
           {
-            title: '序号',
+            title: '#',
             dataIndex: '',
             key:'rowIndex',
             width:60,
@@ -122,23 +121,21 @@
               return parseInt(index)+1;
             }
           },
+          // {
+          //   title:'租户id',
+          //   align:"center",
+          //   dataIndex: 'tenantId'
+          // },
           {
-            title: '专业封面图片',
-            align: 'center',
-            dataIndex: 'cover',
-            scopedSlots: { customRender: 'imgSlot' },
-          },
-          {
-            title:'专业名称',
+            title:'appid',
             align:"center",
-            dataIndex: 'miName'
+            dataIndex: 'appid'
           },
           {
-            title:'所属院系',
+            title:'key',
             align:"center",
-            dataIndex: 'collegeId_dictText'
+            dataIndex: 'secretkey'
           },
-          
           {
             title: '操作',
             dataIndex: 'action',
@@ -149,11 +146,11 @@
           }
         ],
         url: {
-          list: "/manage/recruitMajorInfo/list",
-          delete: "/manage/recruitMajorInfo/delete",
-          deleteBatch: "/manage/recruitMajorInfo/deleteBatch",
-          exportXlsUrl: "/manage/recruitMajorInfo/exportXls",
-          importExcelUrl: "manage/recruitMajorInfo/importExcel",
+          list: "/manage/appKey/list",
+          delete: "/manage/appKey/delete",
+          deleteBatch: "/manage/appKey/deleteBatch",
+          exportXlsUrl: "/manage/appKey/exportXls",
+          importExcelUrl: "manage/appKey/importExcel",
           
         },
         dictOptions:{},
@@ -173,9 +170,9 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'miName',text:'专业名称',dictCode:''})
-        fieldList.push({type:'Text',value:'miContent',text:'专业介绍',dictCode:''})
-        fieldList.push({type:'string',value:'collegeId',text:'所属院系',dictCode:'recruit_college_info,ci_name,id'})
+        fieldList.push({type:'string',value:'tenantId',text:'租户id',dictCode:''})
+        fieldList.push({type:'string',value:'appid',text:'appid',dictCode:''})
+        fieldList.push({type:'string',value:'secretkey',text:'key',dictCode:''})
         this.superFieldList = fieldList
       }
     }

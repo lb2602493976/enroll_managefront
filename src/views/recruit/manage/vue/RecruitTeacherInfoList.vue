@@ -70,8 +70,8 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <!-- <a-divider type="vertical" />
-          <a-dropdown>
+          <a-divider type="vertical" />
+          <!-- <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
@@ -123,10 +123,16 @@
             }
           },
           {
+            title:'排序',
+            align:"center",
+            dataIndex: 'sort'
+          },
+          {
             title:'名师姓名',
             align:"center",
             dataIndex: 'tiName'
           },
+          
           {
             title:'名师类型',
             align:"center",

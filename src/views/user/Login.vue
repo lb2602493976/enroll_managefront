@@ -1,5 +1,5 @@
 <template>
-  <div class="main" style="width: 600px;background-color: #fff;border-radius:100px;margin-left:300px;opacity:0.6;">
+  <div class="main" style="width: 600px;background-color: #fff;border-radius:100px;margin-left:300px;opacity:1;">
     <div style="width: 41%;float: left;height:600px;">
       <img style="border-top-left-radius:100px;border-bottom-left-radius:100px;" src="https://file.yunquewang.cn/group1/default/20210625/11/34/4/format_bg.jpg" width="100%"  height="100%" />
     </div>

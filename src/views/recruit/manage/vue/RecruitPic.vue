@@ -222,9 +222,11 @@
       remove(targetKey) {
         const that = this;
         axios
-          .delete(`/manage/recruitPicAbout/deletePicAboutListByType?type=${targetKey}&state=2`)
+          // .delete(`/manage/recruitPicAbout/deletePicAboutListByType?type=${targetKey}&state=2`)
+          .delete(`/manage/recruitPictureType/delete?id=${targetKey}`)
           .then((res) => {
-            if(res.result === "删除成功！"){
+            console.log(res.code)
+            if(res.code === 200){
               that.$message.success(res.message);
               that.getTabsList()
             }else {

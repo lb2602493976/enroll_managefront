@@ -8,22 +8,22 @@
     :okButtonProps="{ class:{'jee-hidden': disableSubmit} }"
     @cancel="handleCancel"
     cancelText="关闭">
-    <recruit-teacher-info-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></recruit-teacher-info-form>
+    <generate-poster-form ref="realForm" @ok="submitCallback" :disabled="disableSubmit"></generate-poster-form>
   </j-modal>
 </template>
 
 <script>
 
-  import RecruitTeacherInfoForm from './RecruitTeacherInfoForm'
+  import GeneratePosterForm from './GeneratePosterForm'
   export default {
-    name: 'RecruitTeacherInfoModal',
+    name: 'GeneratePosterModal',
     components: {
-      RecruitTeacherInfoForm
+      GeneratePosterForm
     },
     data () {
       return {
         title:'',
-        width:1400,
+        width:800,
         visible: false,
         disableSubmit: false
       }
@@ -39,7 +39,6 @@
         this.visible=true
         this.$nextTick(()=>{
           this.$refs.realForm.edit(record);
-          console.log(record,'model222')
         })
       },
       close () {

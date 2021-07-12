@@ -11,19 +11,19 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">添加专业</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('专业信息表')">导出</a-button>
+      <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <a-button type="primary" icon="download" @click="handleExportXls('录取通知')">下载模板</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
-      </a-upload> -->
+      </a-upload>
       <!-- 高级查询区域 -->
-      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
+      </a-dropdown> -->
     </div>
 
     <!-- table区域-begin -->
@@ -43,8 +43,8 @@
         :dataSource="dataSource"
         :pagination="ipagination"
         :loading="loading"
-        class="j-table-force-nowrap"
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
+        class="j-table-force-nowrap"
         @change="handleTableChange">
 
         <template slot="htmlSlot" slot-scope="text">
@@ -70,7 +70,7 @@
         <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
-          <!-- <a-divider type="vertical" />
+          <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -83,13 +83,13 @@
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>
-          </a-dropdown> -->
+          </a-dropdown>
         </span>
 
       </a-table>
     </div>
 
-    <recruit-major-info-modal ref="modalForm" @ok="modalFormOk"></recruit-major-info-modal>
+    <admission-notice-modal ref="modalForm" @ok="modalFormOk"></admission-notice-modal>
   </a-card>
 </template>
 
@@ -98,22 +98,21 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import RecruitMajorInfoModal from './modules/RecruitMajorInfoModal'
-  import {filterMultiDictText} from '@/components/dict/JDictSelectUtil'
+  import AdmissionNoticeModal from './modules/AdmissionNoticeModal'
 
   export default {
-    name: 'RecruitMajorInfoList',
+    name: 'AdmissionNoticeList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      RecruitMajorInfoModal
+      AdmissionNoticeModal
     },
     data () {
       return {
-        description: '专业信息表管理页面',
+        description: '录取通知管理页面',
         // 表头
         columns: [
           {
-            title: '序号',
+            title: '#',
             dataIndex: '',
             key:'rowIndex',
             width:60,
@@ -122,38 +121,46 @@
               return parseInt(index)+1;
             }
           },
+          // {
+          //   title:'学校id',
+          //   align:"center",
+          //   dataIndex: 'tenantId'
+          // },
           {
-            title: '专业封面图片',
-            align: 'center',
-            dataIndex: 'cover',
-            scopedSlots: { customRender: 'imgSlot' },
+            title:'姓名',
+            align:"center",
+            dataIndex: 'name'
           },
           {
-            title:'专业名称',
+            title:'快递公司名称',
             align:"center",
-            dataIndex: 'miName'
+            dataIndex: 'courierName'
           },
           {
-            title:'所属院系',
+            title:'快递单号',
             align:"center",
-            dataIndex: 'collegeId_dictText'
+            dataIndex: 'orderNum'
           },
-          
           {
-            title: '操作',
-            dataIndex: 'action',
+            title:'身份证号',
             align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' }
-          }
+            dataIndex: 'idCard'
+          },
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' }
+          // }
         ],
         url: {
-          list: "/manage/recruitMajorInfo/list",
-          delete: "/manage/recruitMajorInfo/delete",
-          deleteBatch: "/manage/recruitMajorInfo/deleteBatch",
-          exportXlsUrl: "/manage/recruitMajorInfo/exportXls",
-          importExcelUrl: "manage/recruitMajorInfo/importExcel",
+          list: "/manage/admissionNotice/list",
+          delete: "/manage/admissionNotice/delete",
+          deleteBatch: "/manage/admissionNotice/deleteBatch",
+          exportXlsUrl: "/manage/admissionNotice/exportXls",
+          importExcelUrl: "manage/admissionNotice/importExcel",
           
         },
         dictOptions:{},
@@ -173,9 +180,11 @@
       },
       getSuperFieldList(){
         let fieldList=[];
-        fieldList.push({type:'string',value:'miName',text:'专业名称',dictCode:''})
-        fieldList.push({type:'Text',value:'miContent',text:'专业介绍',dictCode:''})
-        fieldList.push({type:'string',value:'collegeId',text:'所属院系',dictCode:'recruit_college_info,ci_name,id'})
+        fieldList.push({type:'string',value:'tenantId',text:'学校id',dictCode:''})
+        fieldList.push({type:'string',value:'name',text:'姓名',dictCode:''})
+        fieldList.push({type:'string',value:'courierName',text:'快递公司名称',dictCode:''})
+        fieldList.push({type:'string',value:'orderNum',text:'快递单号',dictCode:''})
+        fieldList.push({type:'string',value:'idCard',text:'身份证号',dictCode:''})
         this.superFieldList = fieldList
       }
     }

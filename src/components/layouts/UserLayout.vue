@@ -43,7 +43,7 @@
     mixins: [mixinDevice],
     data () {
       return {
-        url:localStorage.getItem('schoolBackGround') === null ?'https://file.yunquewang.cn/group1/default/20210625/11/44/4/pexels-diana-plotkin-1042828.jpg' :localStorage.getItem('schoolBackGround')
+        url:localStorage.getItem('schoolBackGround') === null ?'https://file.yunquewang.cn/group1/default/20210703/14/16/4/mountain-slope-6374980_1920.jpg' :localStorage.getItem('schoolBackGround')
       }
     },
     mounted () {

@@ -7,6 +7,11 @@
             <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
               <a-row>
                 <a-col :span="24">
+                  <a-form-model-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sort">
+                    <a-input v-model="model.sort" placeholder="请输入排序" :maxLength="20" ></a-input>
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="24">
                   <a-form-model-item label="名师姓名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tiName">
                     <a-input v-model="model.tiName" placeholder="请输入名师姓名（不超过10个字）" :maxLength="10" ></a-input>
                   </a-form-model-item>
@@ -23,9 +28,11 @@
                 </a-col>
                 <a-col :span="24">
                   <a-form-model-item label="名师介绍" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tiContent">
-                    <j-editor v-model="model.tiContent" />
+                    <!-- <j-editor v-model="model.tiContent" /> -->
+                    <a-input v-model="model.tiContent" placeholder="请输入名师介绍"  ></a-input>
                   </a-form-model-item>
                 </a-col>
+                
                 <a-col :span="24">
                   <a-form-model-item label="封面照片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tiPhoto">
                     <!--              <j-image-upload isMultiple  v-model="model.tiPhoto" ></j-image-upload>-->
@@ -101,7 +108,8 @@
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
         model:{
-          tiContent:''
+          tiContent:'',
+          sort:''
          },
         labelCol: {
           xs: { span: 24 },
@@ -171,10 +179,17 @@
       },
 
       add () {
+
         this.edit(this.modelDefault);
       },
       edit (record) {
-        this.model = Object.assign({}, record);
+        // console.log(record,'record')
+        
+        // this.model = Object.assign({}, record);
+        // console.log(model1,'mode1')
+       
+        this.model ={...record}
+        // console.log(this.model,'model')
         this.visible = true;
       },
       submitForm () {
@@ -192,7 +207,8 @@
               httpurl+=this.url.edit;
                method = 'put';
             }
-            httpAction(httpurl,this.model,method).then((res)=>{
+            httpAction(httpurl,{...this.model,sort:parseInt(this.model.sort)},method).then((res)=>{
+              console.log(this.model,'model111')
               if(res.success){
                 that.$message.success(res.message);
                 that.$emit('ok');
