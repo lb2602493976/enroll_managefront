@@ -47,6 +47,12 @@
               <!-- <j-dict-select-tag type="list" v-model="model.title" dictCode="new_types" placeholder="请选择新闻资讯模块" /> -->
             </a-form-model-item>
           </a-col>
+
+          <!-- <a-col :span="24">
+            <a-form-model-item label="跳转公众号链接" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content">
+              <a-input v-model="model.content" placeholder="请输入跳转公众号链接"></a-input>
+            </a-form-model-item>
+          </a-col> -->
           
           <a-col :span="14" >
             <a-form-model-item label="模块内容" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content">

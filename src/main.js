@@ -50,7 +50,7 @@ import '@/components/JVxeCells/install'
 import './assets/iconfont/iconfont.css'
 
 import * as echarts from 'echarts';
-Vue.prototype.$echarts = echarts;
+Vue.prototype.$echarts = echarts
 
 import { axios } from '@/utils/request'
 

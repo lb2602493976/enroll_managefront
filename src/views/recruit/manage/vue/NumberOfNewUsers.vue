@@ -11,27 +11,27 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('小程序key')">导出</a-button>
+      <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('招生咨询')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
       <!-- 高级查询区域 -->
       <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
+      </a-dropdown> -->
     </div>
 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+      <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
         <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-      </div>
+      </div> -->
 
       <a-table
         ref="table"
@@ -67,7 +67,7 @@
           </a-button>
         </template>
 
-        <span slot="action" slot-scope="text, record">
+        <!-- <span slot="action" slot-scope="text, record">
           <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical" />
@@ -84,12 +84,12 @@
               </a-menu-item>
             </a-menu>
           </a-dropdown>
-        </span>
+        </span> -->
 
       </a-table>
     </div>
 
-    <app-key-modal ref="modalForm" @ok="modalFormOk"></app-key-modal>
+    <admission-counseling-modal ref="modalForm" @ok="modalFormOk"></admission-counseling-modal>
   </a-card>
 </template>
 
@@ -98,21 +98,21 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
-  import AppKeyModal from './modules/AppKeyModal'
+  import AdmissionCounselingModal from './modules/NumberOfNewUsersModal'
 
   export default {
-    name: 'AppKeyList',
+    name: 'AdmissionCounselingList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      AppKeyModal
+      AdmissionCounselingModal
     },
     data () {
       return {
-        description: '小程序key管理页面',
+        description: '新增用户数页面',
         // 表头
         columns: [
           {
-            title: '#',
+            title: '序号',
             dataIndex: '',
             key:'rowIndex',
             width:60,
@@ -121,36 +121,56 @@
               return parseInt(index)+1;
             }
           },
-          // { 
+          // {
           //   title:'租户id',
           //   align:"center",
           //   dataIndex: 'tenantId'
           // },
           {
-            title:'appid',
+            title:'注册时间',
             align:"center",
-            dataIndex: 'appid'
+            dataIndex: 'schoolAddress'
           },
           {
-            title:'key',
+            title:'姓名',
             align:"center",
-            dataIndex: 'secretkey'
+            dataIndex: 'schoolWebsite'
           },
           {
-            title: '操作',
-            dataIndex: 'action',
+            title:'电话',
             align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' }
-          }
+            dataIndex: 'admissionsWebsite'
+          },
+          {
+            title:'兴趣模块',
+            align:"center",
+            dataIndex: 'admissionsTel'
+          },
+          {
+            title:'兴趣模块',
+            align:"center",
+            dataIndex: 'admissionsTel1'
+          },
+          {
+            title:'兴趣模块',
+            align:"center",
+            dataIndex: 'admissionsTel2'
+          },
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' }
+          // }
         ],
         url: {
-          list: "/manage/appKey/list",
-          delete: "/manage/appKey/delete",
-          deleteBatch: "/manage/appKey/deleteBatch",
-          exportXlsUrl: "/manage/appKey/exportXls",
-          importExcelUrl: "manage/appKey/importExcel",
+          list: "/manage/admissionCounseling/list",
+          delete: "/manage/admissionCounseling/delete",
+          deleteBatch: "/manage/admissionCounseling/deleteBatch",
+          exportXlsUrl: "/manage/admissionCounseling/exportXls",
+          importExcelUrl: "manage/admissionCounseling/importExcel",
           
         },
         dictOptions:{},
@@ -171,8 +191,10 @@
       getSuperFieldList(){
         let fieldList=[];
         fieldList.push({type:'string',value:'tenantId',text:'租户id',dictCode:''})
-        fieldList.push({type:'string',value:'appid',text:'appid',dictCode:''})
-        fieldList.push({type:'string',value:'secretkey',text:'key',dictCode:''})
+        fieldList.push({type:'string',value:'schoolAddress',text:'学校地址',dictCode:''})
+        fieldList.push({type:'string',value:'schoolWebsite',text:'学校网址',dictCode:''})
+        fieldList.push({type:'string',value:'admissionsWebsite',text:'招生网址',dictCode:''})
+        fieldList.push({type:'string',value:'admissionsTel',text:'招生办电话',dictCode:''})
         this.superFieldList = fieldList
       }
     }
