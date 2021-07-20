@@ -129,33 +129,33 @@
           {
             title:'注册时间',
             align:"center",
-            dataIndex: 'schoolAddress'
+            dataIndex: 'createTime'
           },
           {
             title:'姓名',
             align:"center",
-            dataIndex: 'schoolWebsite'
+            dataIndex: 'userName'
           },
           {
             title:'电话',
             align:"center",
-            dataIndex: 'admissionsWebsite'
+            dataIndex: 'phone'
           },
-          {
-            title:'兴趣模块',
-            align:"center",
-            dataIndex: 'admissionsTel'
-          },
-          {
-            title:'兴趣模块',
-            align:"center",
-            dataIndex: 'admissionsTel1'
-          },
-          {
-            title:'兴趣模块',
-            align:"center",
-            dataIndex: 'admissionsTel2'
-          },
+          // {
+          //   title:'兴趣模块',
+          //   align:"center",
+          //   dataIndex: 'admissionsTel'
+          // },
+          // {
+          //   title:'兴趣模块',
+          //   align:"center",
+          //   dataIndex: 'admissionsTel1'
+          // },
+          // {
+          //   title:'兴趣模块',
+          //   align:"center",
+          //   dataIndex: 'admissionsTel2'
+          // },
           // {
           //   title: '操作',
           //   dataIndex: 'action',
@@ -166,7 +166,7 @@
           // }
         ],
         url: {
-          list: "/manage/admissionCounseling/list",
+          list: "/manage/recruitStudent/list",
           delete: "/manage/admissionCounseling/delete",
           deleteBatch: "/manage/admissionCounseling/deleteBatch",
           exportXlsUrl: "/manage/admissionCounseling/exportXls",

@@ -127,7 +127,7 @@
           //   dataIndex: 'tenantId'
           // },
           {
-            title:'类型（1：图片，2：文字，3版式）',
+            title:'类型（0：图片，1：文字，2版式）',
             align:"center",
             dataIndex: 'type'
           },

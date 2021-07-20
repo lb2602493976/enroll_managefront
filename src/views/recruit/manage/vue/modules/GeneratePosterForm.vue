@@ -8,9 +8,9 @@
               <a-input v-model="model.tenantId" placeholder="请输入租户id"  ></a-input>
             </a-form-model-item>
           </a-col> -->
+          <!-- 先注释 -->
           <a-col :span="24">
-            <a-form-model-item label="类型（1：图片，2：文字，3版式）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
-              <!-- <a-input v-model="model.type" placeholder="请输入类型（1：图片，2：文字，3版式）"  ></a-input> -->
+            <a-form-model-item label="类型（0：图片，1：文字，2版式）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
               <a-select
                 placeholder="请选择"
                 @change="handleChange"
@@ -25,8 +25,7 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24" v-if="active==0">
-            <a-form-model-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content">
-              <!-- <a-input v-model="model.content" placeholder="请输入内容"  ></a-input> -->
+            <a-form-model-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content1">
               <a-upload
                   style="width: 128px;height: 128px;"
                   name="file"
@@ -38,8 +37,9 @@
                   @change="handleChange2"
                   :before-upload="beforeUpload"
                 >
-                
-                  <img style="width: 128px;height: 128px;" v-if="model.content" :src="model.content" alt="avatar" />
+                  <div v-if="model.content">
+                    <img style="width: 128px;height: 128px;"  :src="model.content" alt="avatar" />
+                  </div>
                   <div v-else>
                     <a-icon :type="loading ? 'loading' : 'plus'" />
                     <div class="ant-upload-text">
@@ -50,12 +50,12 @@
             </a-form-model-item>
           </a-col>
           <a-col :span="24" v-else-if="active==1">
-            <a-form-model-item label="内容" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content">
+            <a-form-model-item label="内容" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content2">
               <a-input v-model="model.content" placeholder="请输入内容"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24" v-else-if="active==2">
-            <a-form-model-item label="板式" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content">
+            <a-form-model-item label="板式" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content3">
               <!-- 上下左右 0123 -->
               <!-- <a-input v-model="model.content" placeholder="请输入内容"  ></a-input> -->
               <a-select
@@ -99,16 +99,16 @@
         loading : false,
         typeList:[
           // 1：，2：，3版式
-          {label:'图片',value:0},
-          {label:'文字',value:1},
-          {label:'版式',value:2},
+          {label:'图片',value:'0'},
+          {label:'文字',value:'1'},
+          {label:'版式',value:'2'},
         ],
         typeList1:[
           // 1：，2：，3版式
-          {label:'上',value:0},
-          {label:'下',value:1},
-          {label:'左',value:2},
-          {label:'右',value:3},
+          {label:'上',value:'0'},
+          {label:'下',value:'1'},
+          {label:'左',value:'2'},
+          {label:'右',value:'3'},
         ],
         active:'10',
         model:{
@@ -127,8 +127,11 @@
           //     { required: true, message: '不能为空!'},
           //  ],
            type: [
-              { required: true, message: '请选择类型!'},
+              { required: true, message: '请选择类型！'}
            ],
+          //  content1:[{required:true,message:'图片不能为空！'}],
+          //  content2:[{required:true,message:'文字不能为空！'}],
+          //  content3:[{required:true,message:'板式不能为空！'}],
           //  cmFile: [
           //     { required: true, message: '请输入附件!'},
           //  ],
@@ -163,15 +166,18 @@
         this.model.type = value;
       },
       handleChangeType(val){
+        console.log(val,'valuelll')
         this.model.content = val;
       },
       handleChange2(info) {
         if (info.file.status === 'uploading') {
           this.loading = true;
           return;
-        }else if (info.file.status === 'done') {
+        }else if (info.file.status === "done") {
            console.log(info.file,'info')
           this.model.content=info.file.response.url
+          if(!this.model.content)this.loading=false
+          console.log(this.model.content,'modelcontent')
         }
       },
       // 限制图片大小

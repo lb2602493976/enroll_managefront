@@ -25,19 +25,19 @@
             <a-row :gutter="20" type="flex" justify="center" align="center">
                 <a-col  class="statistic-box">
                     <a-card title="新增用户数 " class="box-card" style="width: 400px" @click="NumberOfNewUsers(0)">
-                      <div slot="extra" href="#">单位：(人)</div>
+                      <div slot="extra">单位：(人)</div>
                       <div class="number">{{ totalUsersNum || 0 }}</div>
                     </a-card>
                 </a-col>
                 <a-col  class="statistic-box">
                     <a-card title="被动联系数 " class="box-card" style="width: 400px" @click="NumberOfNewUsers(1)">
-                      <div slot="extra" href="#">单位：(人)</div>
+                      <div slot="extra">单位：(人)</div>
                       <div class="number">{{ totalAmount || 0}}</div>
                     </a-card>
                 </a-col>
                 <a-col  class="statistic-box">
                     <a-card title="主动联系数 " class="box-card" style="width: 400px" @click="NumberOfNewUsers(2)">
-                      <div slot="extra" href="#">单位：(人)</div>
+                      <div slot="extra">单位：(人)</div>
                       <div class="number">{{ totalTopUp || 0}}</div>
                     </a-card>
                 </a-col>

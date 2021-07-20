@@ -107,6 +107,7 @@
             }
             httpAction(httpurl,this.model,method).then((res)=>{
               if(res.success){
+                console.log(res,'res')
                 that.$message.success(res.message);
                 that.$emit('ok');
               }else{
