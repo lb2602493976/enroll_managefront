@@ -134,9 +134,9 @@
            collegeId: [
               { required: true, message: '请选择所属院系!'},
            ],
-           vaCover: [
-              { required: true, message: '请上传视频封面!'},
-           ],
+          //  vaCover: [
+          //     { required: true, message: '请上传视频封面!'},
+          //  ],
         },
         url: {
           add: "/manage/recruitVideoAbout/add",
