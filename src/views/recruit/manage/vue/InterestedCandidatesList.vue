@@ -152,9 +152,14 @@
             dataIndex: 'wechat'
           },
           {
-            title:'专业集合',
+            title:'志向学院/专业（可填多项）',
             align:"center",
             dataIndex: 'majors'
+          },
+          {
+            title:'高考/中考/模拟考成绩',
+            align:"center",
+            dataIndex: 'score'
           },
           {
             title:'是否接受专业调剂（1：接受，2：不接受）',

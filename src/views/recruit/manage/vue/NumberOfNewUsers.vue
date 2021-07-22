@@ -132,7 +132,7 @@
             dataIndex: 'createTime'
           },
           {
-            title:'姓名',
+            title:'微信昵称',
             align:"center",
             dataIndex: 'userName'
           },
