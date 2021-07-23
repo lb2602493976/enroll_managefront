@@ -10,7 +10,7 @@
           </a-col> -->
           <!-- 先注释 -->
           <a-col :span="24">
-            <a-form-model-item label="类型（0：图片，1：文字，2版式）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
+            <a-form-model-item label="类型（1：图片，2：文字，3版式）" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
               <a-select
                 placeholder="请选择"
                 @change="handleChange"
@@ -99,9 +99,9 @@
         loading : false,
         typeList:[
           // 1：，2：，3版式
-          {label:'图片',value:'0'},
-          {label:'文字',value:'1'},
-          {label:'版式',value:'2'},
+          {label:'图片',value:'1'},
+          {label:'文字',value:'2'},
+          {label:'版式',value:'3'},
         ],
         typeList1:[
           // 1：，2：，3版式
