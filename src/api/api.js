@@ -63,13 +63,17 @@ const treeList = (params)=>getAction("/sys/dict/treeList",params);
 const addDictItem = (params)=>postAction("/sys/dictItem/add",params);
 const editDictItem = (params)=>putAction("/sys/dictItem/edit",params);
 
+//字典数据
+const getDictOne=(params)=>getAction("/sys/dict/getDict",params)
+
 //字典标签专用（通过code获取字典数组）
 export const ajaxGetDictItems = (code, params)=>getAction(`/sys/dict/getDictItems/${code}`,params);
 //从缓存中获取字典配置
 function getDictItemsFromCache(dictCode) {
   if (Vue.ls.get(UI_CACHE_DB_DICT_DATA) && Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode]) {
+    // console.log('Vue.ls.get(UI_CACHE_DB_DICT_DATA)',Vue.ls.get(UI_CACHE_DB_DICT_DATA))
     let dictItems = Vue.ls.get(UI_CACHE_DB_DICT_DATA)[dictCode];
-    //console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
+    // console.log("-----------getDictItemsFromCache----------dictCode="+dictCode+"---- dictItems=",dictItems)
     return dictItems;
   }
 }
@@ -157,7 +161,8 @@ export {
   saveDeptRolePermission,
   queryMyDepartTreeList,
   getUserNoticeInfo,
-  getDictItemsFromCache
+  getDictItemsFromCache,
+  getDictOne
 }
 
 

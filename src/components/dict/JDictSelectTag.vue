@@ -69,14 +69,18 @@
       initDictData() {
         //优先从缓存中读取字典配置
         if(getDictItemsFromCache(this.dictCode)){
+         
           this.dictOptions = getDictItemsFromCache(this.dictCode);
+          console.log(this.dictCode,'heiheihie')
+           console.log('缓存中拿到的',this.dictOptions)
           return
         }
 
         //根据字典Code, 初始化字典数组
         ajaxGetDictItems(this.dictCode, null).then((res) => {
           if (res.success) {
-//                console.log(res.result);
+            
+            console.log(res.result,'69');
             this.dictOptions = res.result;
           }
         })

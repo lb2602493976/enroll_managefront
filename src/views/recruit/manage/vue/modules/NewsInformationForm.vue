@@ -36,7 +36,17 @@
 
           <a-col :span="24" >
             <a-form-model-item label="类型" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
-              <j-dict-select-tag type="list" v-model="model.type" dictCode="new_types" placeholder="请选择新闻资讯模块" />
+              <!-- <j-dict-select-tag type="list" v-model="model.type" dictCode="new_types" placeholder="请选择新闻资讯模块" /> -->
+              <a-select @change="handleSelectChange" v-model="model.type" placeholder="请选择新闻资讯模块">
+                <a-select-option
+                  v-for="(item,index) of newsList" 
+                  :key="index"
+                  :value="item.itemValue"
+                  :label="item.itemText"
+                >
+                  {{item.itemText}}
+                </a-select-option>
+              </a-select>
             </a-form-model-item>
           </a-col>
 
@@ -118,6 +128,7 @@
 <script>
 
   import { httpAction, getAction } from '@/api/manage'
+  import { getDictOne } from '@/api/api'
   import { validateDuplicateValue } from '@/utils/util'
 
   export default {
@@ -136,6 +147,7 @@
       return {
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
+        newsList:[],  //新闻资讯
         model:{
           content:''
          },
@@ -186,8 +198,15 @@
        //备份model原始值
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
       console.log(this.model,98765)
+      getDictOne({dictCode:'new_types'}).then(res=>{
+        this.newsList=res.result
+        console.log(res.result,'res')
+      })
     },
     methods: {
+      handleSelectChange(val){
+        console.log(val,'新闻资讯类型')
+      },
       handleChange(info) {
         if (info.file.status === 'uploading') {
           this.loading = true;
