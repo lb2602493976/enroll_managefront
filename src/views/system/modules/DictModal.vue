@@ -66,7 +66,8 @@
           dictName: [{ required: true, message: '请输入字典名称!' }],
           dictCode: [
             { required: true, message: '请输入字典编码!' },
-            { validator: this.validateDictCode }]
+            // { validator: this.validateDictCode }
+            ]
           }
       }
     },

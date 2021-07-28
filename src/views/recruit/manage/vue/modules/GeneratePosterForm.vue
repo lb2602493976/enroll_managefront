@@ -17,14 +17,15 @@
                 :value="model.type"
               >
                 <a-select-option
-                  v-for="(item,index) of typeList" :key="index"
+                  v-for="(item,index) of typeList" 
+                  :key="index"
                   :value="item.value">
                     {{item.label}}
                 </a-select-option>
               </a-select>
             </a-form-model-item>
           </a-col>
-          <a-col :span="24" v-if="active==0">
+          <a-col :span="24" v-if="active==1">
             <a-form-model-item label="图片" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content1">
               <a-upload
                   style="width: 128px;height: 128px;"
@@ -49,12 +50,12 @@
                 </a-upload>
             </a-form-model-item>
           </a-col>
-          <a-col :span="24" v-else-if="active==1">
+          <a-col :span="24" v-else-if="active==2">
             <a-form-model-item label="内容" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content2">
               <a-input v-model="model.content" placeholder="请输入内容"  ></a-input>
             </a-form-model-item>
           </a-col>
-          <a-col :span="24" v-else-if="active==2">
+          <a-col :span="24" v-else-if="active==3">
             <a-form-model-item label="板式" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="content3">
               <!-- 上下左右 0123 -->
               <!-- <a-input v-model="model.content" placeholder="请输入内容"  ></a-input> -->
