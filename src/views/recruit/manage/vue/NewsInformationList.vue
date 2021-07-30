@@ -4,6 +4,35 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+          <a-col :md="6" :sm="8">
+            <a-form-item label="标题">
+              <a-input placeholder="请选择" v-model="queryParam.title"></a-input>
+              
+            </a-form-item>
+          </a-col>
+
+          <a-col :md="6" :sm="8">
+            <a-form-item label="类型">
+              <!-- <a-input placeholder="请输入" v-model="queryParam.type"></a-input> -->
+              <a-select  v-model="queryParam.type" placeholder="请选择">
+                <a-select-option
+                  v-for="(item,index) of newsList" 
+                  :key="index"
+                  :value="item.itemValue"
+                  :label="item.itemText"
+                >
+                  {{item.itemText}}
+                </a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+
+          <a-col :md="6" :sm="8">
+            <span style="float: left; overflow: hidden" class="table-page-search-submitButtons">
+              <a-button type="primary" @click="searchQuery" icon="search">查询</a-button>
+              <a-button type="primary" @click="searchReset" icon="reload" style="margin-left: 8px">重置</a-button>
+            </span>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -99,6 +128,7 @@
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
   import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import { getDictOne } from '@/api/api'
   // import { treeList } from '@/api/api.js'
   // import RecruitModuleModal from './modules/RecruitModuleModal'
   import NewsInformationModal from './modules/NewsInformationModal'
@@ -111,6 +141,7 @@
     },
     data () {
       return {
+        newsList:[],  //新闻资讯
         description: '新闻资讯管理页面',
         // 表头
         columns: [
@@ -181,6 +212,10 @@
     },
     created() {
     this.getSuperFieldList();
+    getDictOne({dictCode:'new_types'}).then(res=>{
+      this.newsList=res.result
+      console.log(res.result,'res')
+    })
     // treeList().then(res=>{
     //   console.log(res,'resss')
     // })
