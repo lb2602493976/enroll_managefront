@@ -135,27 +135,33 @@
             title:'微信昵称',
             align:"center",
             dataIndex: 'userName'
+            // dataIndex: 'userName'
           },
           {
             title:'电话',
             align:"center",
             dataIndex: 'phone'
           },
-          // {
-          //   title:'兴趣模块',
-          //   align:"center",
-          //   dataIndex: 'admissionsTel'
-          // },
-          // {
-          //   title:'兴趣模块',
-          //   align:"center",
-          //   dataIndex: 'admissionsTel1'
-          // },
-          // {
-          //   title:'兴趣模块',
-          //   align:"center",
-          //   dataIndex: 'admissionsTel2'
-          // },
+          {
+            title:'openid',
+            align:'center',
+            dataIndex:'openid'
+          },
+          {
+            title:'兴趣模块(次数)',
+            align:"center",
+            dataIndex: 'userClickList[0].moduleName'
+          },
+          {
+            title:'兴趣模块(次数)',
+            align:"center",
+            dataIndex: 'userClickList[1].moduleName'
+          },
+          {
+            title:'兴趣模块(次数)',
+            align:"center",
+            dataIndex: 'userClickList[2].moduleName'
+          },
           // {
           //   title: '操作',
           //   dataIndex: 'action',
