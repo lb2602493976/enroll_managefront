@@ -4,6 +4,11 @@
     <div class="table-page-search-wrapper">
       <a-form layout="inline" @keyup.enter.native="searchQuery">
         <a-row :gutter="24">
+          <a-col :md="6" :sm="8">
+            <a-form-item label="标题"  v-show="false">
+              <!-- <a-input placeholder="请选择" v-model="queryParam.createBy"></a-input> -->
+            </a-form-item>
+          </a-col>
         </a-row>
       </a-form>
     </div>
@@ -46,10 +51,13 @@
         :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}"
         class="j-table-force-nowrap"
         @change="handleTableChange">
-
-        <template slot="htmlSlot" slot-scope="text">
-          <div v-html="text"></div>
+        <template slot="tenantId" slot-scope="text">
+        <!-- <span slot="tenantId" slot-scope="text"> -->
+          <a>{{text}}</a>
+        <!-- </span> -->
         </template>
+        <!-- <a slot="tenantId" slot-scope="text" >{{ text }}</a> -->
+        
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
           <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
@@ -66,10 +74,15 @@
             下载
           </a-button>
         </template>
-
+        <template slot="tenantId" slot-scope="text">
+          <div v-html="text"></div>
+        </template>
         <span slot="action" slot-scope="text, record">
+          <a @click="handleCode(record)">获取动态邀请码</a>
+          <a-divider type="vertical" />
+          <a @click="handleTeamPeople(record)">团队人员</a>
+          <a-divider type="vertical" />
           <a @click="handleEdit(record)">编辑</a>
-
           <a-divider type="vertical" />
           <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
@@ -88,7 +101,26 @@
 
       </a-table>
     </div>
-
+    <div>
+      <a-button v-show='false' type="primary" @click="showModal">
+        
+      </a-button>
+      <a-modal
+        :title="titleCode"
+        :visible="visible"
+        :confirm-loading="confirmLoading"
+        
+        cancelText='关闭'
+        @ok="handleOk"
+        @cancel="handleCancel"
+      >
+        <p id="modalTextCode">{{ ModalText }}</p>
+        <!-- <input type="button" @click="copyText()" value="点击复制代码" /> -->
+         <!-- <textarea  id="modalButton"></textarea> -->
+        <!-- <a-button  @click="copyText()">点击复制动态邀请码</a-button> -->
+        <a-button class="tag-read" :data-clipboard-text="ModalText" @click="copyText">点击复制动态邀请码</a-button>
+      </a-modal>
+    </div>
     <admissions-team-modal ref="modalForm" @ok="modalFormOk"></admissions-team-modal>
   </a-card>
 </template>
@@ -97,7 +129,9 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import { httpAction, getAction } from '@/api/manage'
+  import Clipboard from 'clipboard';
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinAmissionsTeamList.js'
   import AdmissionsTeamModal from './modules/AdmissionsTeamModal'
 
   export default {
@@ -106,9 +140,15 @@
     components: {
       AdmissionsTeamModal
     },
+
     data () {
       return {
+        username:this.$store.getters.userInfo.username,
         description: '招生团队管理管理页面',
+        ModalText: '',
+        titleCode:'',
+        visible: false,
+        confirmLoading: false,
         // 表头
         columns: [
           {
@@ -124,7 +164,8 @@
           // {
           //   title:'租户id',
           //   align:"center",
-          //   dataIndex: 'tenantId'
+          //   dataIndex: 'tenantId',
+          //   scopedSlots: { customRender: 'tenantId' },
           // },
           {
             title:'团队名称',
@@ -132,9 +173,9 @@
             dataIndex: 'teamName'
           },
           // {
-          //   title:'团队负责人',
+          //   title:'团队邀请码',
           //   align:"center",
-          //   dataIndex: 'headId'
+          //   dataIndex: 'territory'
           // },
           {
             title:'负责区域',
@@ -164,6 +205,8 @@
     },
     created() {
     this.getSuperFieldList();
+    // queryParam.createBy=this.$store.getters.username
+    // console.log(queryParam.createBy,'dasdasdasdasdada')
     },
     computed: {
       importExcelUrl: function(){
@@ -171,6 +214,68 @@
       },
     },
     methods: {
+      // 点击复制
+      copyText(){
+        var clipboard = new Clipboard('.tag-read')
+        clipboard.on('success', e => {
+        // console.log('复制成功')
+        this.$message.success('复制成功');
+        // 释放内存
+        clipboard.destroy()
+        })
+        clipboard.on('error', e => {
+        // 不支持复制
+        console.log('该浏览器不支持自动复制')
+        // 释放内存
+        clipboard.destroy()
+        })
+      },
+      //跳转团队人员
+      handleTeamPeople(record){
+        console.log(record,'recordddd')
+        this.$router.push({
+          path:'/recruit/manage/vue/TeamPersonnelList',
+          query:{id:record.id}
+        })
+
+      },
+      handleCode(record){
+        // console.log(record,'record')
+        let params={
+          id:record.id
+        }
+        getAction('/manage/admissionsTeam/getInvitCode',params).then((res)=>{
+          console.log(params,'paramsss')
+          if(res.success){
+            console.log(res.result,'res.result')
+            this.showModal()
+            this.ModalText=res.result
+            this.titleCode='动态邀请码已生成(有效性24小时)'
+            // this.$message.success(res.message+'(有效性60分钟)');
+            // that.$emit('ok');
+          }else{
+            this.$message.warning(res.message);
+          }
+        }).finally(() => {
+          // that.confirmLoading = false;
+        })
+      },
+      showModal() {
+        this.visible = true;
+      },
+      handleOk(e) {
+        // this.ModalText = 'The modal will be closed after two seconds';
+        // this.confirmLoading = true;
+        // setTimeout(() => {
+        //   this.visible = false;
+        //   this.confirmLoading = false;
+        // }, 2000);
+        this.visible = false;
+      },
+      handleCancel(e) {
+        console.log('Clicked cancel button');
+        this.visible = false;
+      },
       initDictConfig(){
       },
       getSuperFieldList(){

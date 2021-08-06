@@ -2,7 +2,7 @@ var cityData = [
   {
     "label":"北京市",
     "value":"110000",
-    "children": [
+    "children": [ 
       {
         "label": "北京市",
         "value": "110000",

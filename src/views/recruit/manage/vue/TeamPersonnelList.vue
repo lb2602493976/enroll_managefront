@@ -11,13 +11,13 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
-      <a-button type="primary" icon="download" @click="handleExportXls('团队人员列表')">导出</a-button>
+      <a-button @click="handleTeamPeople()" type="primary" >待审核列表</a-button>
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('团队人员列表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
-      </a-upload>
+      </a-upload> -->
       <!-- 高级查询区域 -->
-      <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query>
+      <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
       <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
@@ -72,7 +72,7 @@
           <a @click="handleEdit(record)">编辑</a>
 
           <a-divider type="vertical" />
-          <a-dropdown>
+          <!-- <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
               <a-menu-item>
@@ -84,7 +84,7 @@
                 </a-popconfirm>
               </a-menu-item>
             </a-menu>
-          </a-dropdown>
+          </a-dropdown> -->
         </span>
 
       </a-table>
@@ -98,7 +98,7 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamPersonnelList'
   import TeamPersonnelModal from './modules/TeamPersonnelModal'
 
   export default {
@@ -122,11 +122,11 @@
               return parseInt(index)+1;
             }
           },
-          {
-            title:'团队id',
-            align:"center",
-            dataIndex: 'teamId'
-          },
+          // {
+          //   title:'团队id',
+          //   align:"center",
+          //   dataIndex: 'teamId'
+          // },
           {
             title:'姓名',
             align:"center",
@@ -138,9 +138,14 @@
             dataIndex: 'phone'
           },
           {
-            title:'小程序关联id',
+            title:'招生老师',
             align:"center",
             dataIndex: 'openId'
+          },
+          {
+            title:'发展用户数',
+            align:"center",
+            dataIndex: 'copenId'
           },
           {
             title: '操作',
@@ -172,6 +177,13 @@
       },
     },
     methods: {
+      // 跳转待审核人员
+      handleTeamPeople(){
+        this.$router.push({
+          path:'/recruit/manage/vue/NumberOfNewUsers',
+          query:{username:this.$store.getters.userInfo.username}
+        })
+      },
       initDictConfig(){
       },
       getSuperFieldList(){
