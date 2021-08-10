@@ -11,28 +11,27 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
-      <!-- <a-button @click="handleTeamPeople()" type="primary" >待审核列表</a-button> -->
-      <!-- <a-button type="primary" icon="download" @click="handleExportXls('团队人员列表')">导出</a-button>
+      <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <!-- <a-button type="primary" icon="download" @click="handleExportXls('招生咨询')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
       </a-upload> -->
       <!-- 高级查询区域 -->
       <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
-        </a-menu> 
+        </a-menu>
         <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
+      </a-dropdown> -->
     </div>
 
-    <!-- table区域-begin --> 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+      <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
         <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-      </div>
+      </div> -->
 
       <a-table
         ref="table"
@@ -53,7 +52,7 @@
         </template>
         <template slot="imgSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无图片</span>
-          <img v-else :src="getImgView(text)"  height="25px"  style="max-width:80px;font-size: 12px;font-style: italic;"/>
+          <img v-else :src="getImgView(text)" height="25px" alt="" style="max-width:80px;font-size: 12px;font-style: italic;"/>
         </template>
         <template slot="fileSlot" slot-scope="text">
           <span v-if="!text" style="font-size: 12px;font-style: italic;">无文件</span>
@@ -69,11 +68,21 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
-          <a @click="handleTodayPeople(record)">今日发展人数（{{record.todayNum}}）</a>
+          <!-- 0：待审核，1：审核通过， 2：审核拒绝 */ -->
+          <!-- <a v-if="status" @click="handleEdit(record)">审核</a> -->
+          <a-popconfirm title="确定要审核通过吗?" @confirm="() => handleYes(record.id)">
+            <a>审核通过</a>
+          </a-popconfirm>
           <a-divider type="vertical" />
-          <a @click="handleAllPeople(record)">总发展人数（{{record.allNum}}）</a>
+          <a-popconfirm title="确定要审核拒绝吗?" @confirm="() => handleNo(record.id)">
+            <a>审核拒绝</a>
+          </a-popconfirm>
           <a-divider type="vertical" />
           <a @click="handleDetail(record)">图片详情</a>
+           <!-- <a-divider type="vertical" /> -->
+          <!-- <a @click="handleEdit(record)">审核拒绝</a> -->
+
+         
           <!-- <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -92,7 +101,7 @@
       </a-table>
     </div>
 
-    <team-personnel-modal ref="modalForm" @ok="modalFormOk"></team-personnel-modal>
+    <admission-counseling-modal ref="modalForm" @ok="modalFormOk"></admission-counseling-modal>
   </a-card>
 </template>
 
@@ -100,18 +109,18 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamPersonnelList'
-  import TeamPersonnelModal from './modules/TeamPersonnelModal'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamToAuditList'
+  import AdmissionCounselingModal from './modules/TeamToAuditListModal'
 
   export default {
-    name: 'TeamPersonnelList',
+    name: 'AdmissionCounselingList',
     mixins:[JeecgListMixin, mixinDevice],
     components: {
-      TeamPersonnelModal
+      AdmissionCounselingModal
     },
     data () {
       return {
-        description: '团队人员列表管理页面',
+        description: '新增用户数页面',
         // 表头
         columns: [
           {
@@ -132,7 +141,7 @@
           {
             title:'注册时间',
             align:"center",
-            dataIndex: 'createTime'
+            dataIndex: 'time'
           },
           {
             title:'姓名',
@@ -167,11 +176,11 @@
             align:"center",
             dataIndex: 'area'
           },
-          // {
-          //   title:'团队名称',
-          //   align:"center",
-          //   dataIndex: 'teamName'
-          // },
+          {
+            title:'团队名称',
+            align:"center",
+            dataIndex: 'teamName'
+          },
           // {
           //   title:'openid',
           //   align:'center',
@@ -188,11 +197,12 @@
           }
         ],
         url: {
-          list: "/manage/teamPersonnel/list",
-          delete: "/manage/teamPersonnel/delete",
-          deleteBatch: "/manage/teamPersonnel/deleteBatch",
-          exportXlsUrl: "/manage/teamPersonnel/exportXls",
-          importExcelUrl: "manage/teamPersonnel/importExcel",
+          list: "/manage/teamPersonnel/getCheckPendingList",
+          delete: "manage/teamPersonnel/edit",
+          // yesOrNo:"manage/teamPersonnel/edit",
+          deleteBatch: "/manage/admissionCounseling/deleteBatch",
+          exportXlsUrl: "/manage/admissionCounseling/exportXls",
+          importExcelUrl: "manage/admissionCounseling/importExcel",
           
         },
         dictOptions:{},
@@ -208,32 +218,16 @@
       },
     },
     methods: {
-      // 跳转待审核人员
-      // handleTeamPeople(){
-      //   this.$router.push({
-      //     path:'/recruit/manage/vue/TeamToAuditList',
-      //     query:{username:this.$store.getters.userInfo.username}
-      //   })
-      // },
-      handleTodayPeople(record){
-        console.log(record.openId,'this.$store.getters.userInfo.openId')
-        this.$router.push({
-          path:'/recruit/manage/vue/DevelopPeople',
-          query:{shareId:record.openId,nowTime:`${new Date().getFullYear()}-${new Date().getMonth()+1}-${new Date().getDate()}`}
-        })
-      },
-      handleAllPeople(record){
-        this.$router.push({
-          path:'/recruit/manage/vue/DevelopPeople',
-          query:{shareId:record.openId}
-        })
-      },
-      initDictConfig(record){
+      initDictConfig(){
       },
       getSuperFieldList(){
         let fieldList=[];
+        // fieldList.push({type:'string',value:'tenantId',text:'租户id',dictCode:''})
         fieldList.push({type:'string',value:'wechatUrl',text:'微信二维码',dictCode:''})
         fieldList.push({type:'string',value:'photoUrl',text:'照片',dictCode:''})
+        // fieldList.push({type:'string',value:'schoolWebsite',text:'学校网址',dictCode:''})
+        // fieldList.push({type:'string',value:'admissionsWebsite',text:'招生网址',dictCode:''})
+        // fieldList.push({type:'string',value:'admissionsTel',text:'招生办电话',dictCode:''})
         this.superFieldList = fieldList
       }
     }

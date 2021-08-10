@@ -3,6 +3,11 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
+          <!-- <a-col :span="24">
+            <a-form-model-item label="租户id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tenantId">
+              <a-input v-model="model.tenantId" placeholder="请输入租户id"  ></a-input>
+            </a-form-model-item>
+          </a-col> -->
           <a-col :span="24">
             <a-form-model-item label="微信二维码" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="schoolAddress">
               <img :src="model.wechatUrl" width="100%" height="100%"/>
@@ -14,23 +19,13 @@
             </a-form-model-item>
           </a-col>
           <!-- <a-col :span="24">
-            <a-form-model-item label="团队id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="teamId">
-              <a-input-number v-model="model.teamId" placeholder="请输入团队id" style="width: 100%" />
+            <a-form-model-item label="招生网址" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="admissionsWebsite">
+              <a-input v-model="model.admissionsWebsite" placeholder="请输入招生网址"  ></a-input>
             </a-form-model-item>
           </a-col>
           <a-col :span="24">
-            <a-form-model-item label="姓名" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="name">
-              <a-input v-model="model.name" placeholder="请输入姓名"  ></a-input>
-            </a-form-model-item>
-          </a-col>
-          <a-col :span="24">
-            <a-form-model-item label="电话" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="phone">
-              <a-input v-model="model.phone" placeholder="请输入电话"  ></a-input>
-            </a-form-model-item>
-          </a-col> 
-          <a-col :span="24">
-            <a-form-model-item label="小程序关联id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="openId">
-              <a-input v-model="model.openId" placeholder="请输入小程序关联id"  ></a-input>
+            <a-form-model-item label="招生办电话" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="admissionsTel">
+              <a-input v-model="model.admissionsTel" placeholder="请输入招生办电话"  disabled="false"></a-input>
             </a-form-model-item>
           </a-col> -->
         </a-row>
@@ -45,7 +40,7 @@
   import { validateDuplicateValue } from '@/utils/util'
 
   export default {
-    name: 'TeamPersonnelForm',
+    name: 'AdmissionCounselingForm',
     components: {
     },
     props: {
@@ -72,9 +67,9 @@
         validatorRules: {
         },
         url: {
-          add: "/manage/teamPersonnel/add",
-          edit: "/manage/teamPersonnel/edit",
-          queryById: "/manage/teamPersonnel/queryById"
+          add: "/manage/admissionCounseling/add",
+          edit: "/manage/admissionCounseling/edit",
+          queryById: "/manage/admissionCounseling/queryById"
         }
       }
     },
@@ -112,6 +107,7 @@
             }
             httpAction(httpurl,this.model,method).then((res)=>{
               if(res.success){
+                console.log(res,'res')
                 that.$message.success(res.message);
                 that.$emit('ok');
               }else{

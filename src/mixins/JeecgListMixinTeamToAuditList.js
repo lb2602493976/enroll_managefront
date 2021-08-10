@@ -4,7 +4,7 @@
  * data中url定义 list为查询列表  delete为删除单条记录  deleteBatch为批量删除
  */
 import { filterObj } from '@/utils/util';
-import { deleteAction, getAction,downFile,getFileAccessHttpUrl } from '@/api/manageTeamToAuditList'
+import { deleteAction, getAction,downFile,getFileAccessHttpUrl,YesOrNoAction } from '@/api/manageTeamToAuditList'
 import Vue from 'vue'
 import { ACCESS_TOKEN, TENANT_ID } from "@/store/mutation-types"
 import store from '@/store'
@@ -31,7 +31,7 @@ export const JeecgListMixin = {
         showSizeChanger: true,
         total: 0
       },
-      username:this.$store.getters.username,
+      // username:this.$store.getters.username,
       /* 排序参数 */
       // isorter:{
       //   column: 'createTime',
@@ -65,19 +65,6 @@ export const JeecgListMixin = {
         //初始化字典配置 在自己页面定义
         this.initDictConfig();
       }
-      // document.addEventListener('click', (e) => {
-      //   console.log(e.target.localName,'eeeee')
-      //   console.log(e.target.currentSrc,'eeeaee')
-      // if(e.target.localName=='img'&&e.target.currentSrc){
-      //   this.visible=true;
-      //   this.imgPath=e.target.currentSrc
-      //   }
-      // }, false)
-      // if(this.$route.query.id)this.loadData()
-  },
-  
-  mounted() {
-    
   },
   computed: {
     //token header
@@ -146,8 +133,8 @@ export const JeecgListMixin = {
       param.field = this.getQueryField();
       param.pageNo = this.ipagination.current;
       param.pageSize = this.ipagination.pageSize;
-      param.teamId=this.$route.query.id;
-      // param.createBy=this.$store.getters.userInfo.username;
+      // param.createBy=this.$route.query.username;
+      param.createBy=this.$store.getters.userInfo.username;
       // param.createBy=this.username;
       // if(this.$store.getters.userInfo.roleName!==this.$store.getters.userInfo.username){
         
@@ -226,6 +213,43 @@ export const JeecgListMixin = {
       }
       var that = this;
       deleteAction(that.url.delete, {id: id}).then((res) => {
+        if (res.success) {
+          //重新计算分页问题
+          that.reCalculatePage(1)
+          that.$message.success(res.message);
+          that.loadData();
+        } else {
+          that.$message.warning(res.message);
+        }
+      });
+    },
+    // 审核通过
+    handleYes: function (id) {
+      console.log(this.url,'321312')
+      if(!this.url.delete){
+        this.$message.error("请设置url.delete属性!")
+        return
+      }
+      var that = this;
+      YesOrNoAction(that.url.delete, {id: id,status:'1'}).then((res) => {
+        if (res.success) {
+          //重新计算分页问题
+          that.reCalculatePage(1)
+          that.$message.success(res.message);
+          that.loadData();
+        } else {
+          that.$message.warning(res.message);
+        }
+      });
+    },
+    // 审核拒绝
+    handleNo: function (id) {
+      if(!this.url.delete){
+        this.$message.error("请设置url.delete属性!")
+        return
+      }
+      var that = this;
+      YesOrNoAction(that.url.delete, {id: id,status:'2'}).then((res) => {
         if (res.success) {
           //重新计算分页问题
           that.reCalculatePage(1)
@@ -372,11 +396,9 @@ export const JeecgListMixin = {
     },
     /* 图片预览 */
     getImgView(text){
-      console.log(text,'textssss')
       if(text && text.indexOf(",")>0){
         text = text.substring(0,text.indexOf(","))
       }
-      console.log(text,'textssss')
       return getFileAccessHttpUrl(text)
     },
     /* 文件下载 */

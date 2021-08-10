@@ -17,6 +17,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
+      <a-button @click="handleNoTeamPeople()" type="primary" >待审核列表</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('招生团队管理')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -228,6 +229,13 @@
         console.log('该浏览器不支持自动复制')
         // 释放内存
         clipboard.destroy()
+        })
+      },
+      // 跳转待审核人员
+      handleNoTeamPeople(){
+        this.$router.push({
+          path:'/recruit/manage/vue/TeamToAuditList',
+          query:{username:this.$store.getters.userInfo.username}
         })
       },
       //跳转团队人员

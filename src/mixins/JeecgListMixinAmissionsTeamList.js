@@ -55,6 +55,9 @@ export const JeecgListMixin = {
       superQueryMatchType: 'and',
     }
   },
+  activated(){
+    this.loadData()
+  },
   created() {
       if(!this.disableMixinCreated){
         console.log(' -- mixin created -- ')
