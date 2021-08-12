@@ -12934,7 +12934,7 @@ var cityData = [
             "value":"610124"
           },
           {
-            "label":"户县",
+            "label":"鄠邑区",
             "value":"610125"
           }
         ]

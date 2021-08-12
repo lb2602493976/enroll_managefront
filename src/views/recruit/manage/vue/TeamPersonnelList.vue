@@ -72,8 +72,8 @@
           <a @click="handleTodayPeople(record)">今日发展人数（{{record.todayNum}}）</a>
           <a-divider type="vertical" />
           <a @click="handleAllPeople(record)">总发展人数（{{record.allNum}}）</a>
-          <a-divider type="vertical" />
-          <a @click="handleDetail(record)">图片详情</a>
+          <!-- <a-divider type="vertical" />
+          <a @click="handleDetail(record)">图片详情</a> -->
           <!-- <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">

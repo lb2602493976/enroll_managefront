@@ -109,7 +109,8 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamToAuditList'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamAllList'
+  // import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import AdmissionCounselingModal from './modules/TeamToAuditListModal'
 
   export default {
@@ -176,11 +177,11 @@
             align:"center",
             dataIndex: 'area'
           },
-          {
-            title:'团队名称',
-            align:"center",
-            dataIndex: 'teamName'
-          },
+          // {
+          //   title:'团队名称',
+          //   align:"center",
+          //   dataIndex: 'teamName'
+          // },
           // {
           //   title:'openid',
           //   align:'center',
@@ -197,7 +198,7 @@
           }
         ],
         url: {
-          list: "/manage/teamPersonnel/getCheckPendingList",
+          list: "/manage/teamPersonnel/getCheckAdminList",
           delete: "manage/teamPersonnel/edit",
           // yesOrNo:"manage/teamPersonnel/edit",
           deleteBatch: "/manage/admissionCounseling/deleteBatch",

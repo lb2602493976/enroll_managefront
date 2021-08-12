@@ -23,7 +23,7 @@
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu>
         <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown> -->
+      </a-dropdown> --> 
     </div>
 
     <!-- table区域-begin -->
@@ -67,16 +67,16 @@
           </a-button>
         </template>
 
-        <span slot="action" slot-scope="text, record">
+        <!-- <span slot="action" slot-scope="text, record"> -->
           <!-- 0：待审核，1：审核通过， 2：审核拒绝 */ -->
           <!-- <a v-if="status" @click="handleEdit(record)">审核</a> -->
-          <a-popconfirm title="确定要审核通过吗?" @confirm="() => handleYes(record.id)">
+          <!-- <a-popconfirm title="确定要审核通过吗?" @confirm="() => handleYes(record.id)">
             <a>审核通过</a>
           </a-popconfirm>
           <a-divider type="vertical" />
           <a-popconfirm title="确定要审核拒绝吗?" @confirm="() => handleNo(record.id)">
             <a>审核拒绝</a>
-          </a-popconfirm>
+          </a-popconfirm> -->
           <!-- <a-divider type="vertical" />
           <a @click="handleDetail(record)">图片详情</a> -->
            <!-- <a-divider type="vertical" /> -->
@@ -96,7 +96,7 @@
               </a-menu-item>
             </a-menu>
           </a-dropdown> -->
-        </span>
+        <!-- </span> -->
 
       </a-table>
     </div>
@@ -109,7 +109,8 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamToAuditList'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinTeamAllYesList'
+  // import { JeecgListMixin } from '@/mixins/JeecgListMixin'
   import AdmissionCounselingModal from './modules/TeamToAuditListModal'
 
   export default {
@@ -176,28 +177,28 @@
             align:"center",
             dataIndex: 'area'
           },
-          {
-            title:'团队名称',
-            align:"center",
-            dataIndex: 'teamName'
-          },
+          // {
+          //   title:'团队名称',
+          //   align:"center",
+          //   dataIndex: 'teamName'
+          // },
           // {
           //   title:'openid',
           //   align:'center',
           //   dataIndex:'openId'
           // },
           
-          {
-            title: '操作',
-            dataIndex: 'action',
-            align:"center",
-            fixed:"right",
-            width:147,
-            scopedSlots: { customRender: 'action' }
-          }
+          // {
+          //   title: '操作',
+          //   dataIndex: 'action',
+          //   align:"center",
+          //   fixed:"right",
+          //   width:147,
+          //   scopedSlots: { customRender: 'action' }
+          // }
         ],
         url: {
-          list: "/manage/teamPersonnel/getCheckPendingList",
+          list: "/manage/teamPersonnel/getCheckAdminList",
           delete: "manage/teamPersonnel/edit",
           // yesOrNo:"manage/teamPersonnel/edit",
           deleteBatch: "/manage/admissionCounseling/deleteBatch",
