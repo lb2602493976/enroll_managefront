@@ -20,7 +20,7 @@
           </a-col> -->
           <a-col :span="24">
             <a-form-model-item label="负责区域" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="territory">
-              <a-cascader :options="options" placeholder="请选择负责区域" v-model="xiaobaga" @change="onChange"></a-cascader>
+              <a-cascader :options="options" placeholder="请选择负责区域" v-model="xiaobaga" @change="onChange" change-on-select></a-cascader>
               <!-- <a-input v-model="model.territory" placeholder="请输入负责区域"  ></a-input> -->
             </a-form-model-item>
           </a-col>

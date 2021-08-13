@@ -11,6 +11,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
+      <a-button @click="goOff()" type="primary">返回</a-button>
       <!-- <a-button @click="handleTeamPeople()" type="primary" >待审核列表</a-button> -->
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('团队人员列表')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -18,21 +19,21 @@
       </a-upload> -->
       <!-- 高级查询区域 -->
       <!-- <j-super-query :fieldList="superFieldList" ref="superQueryModal" @handleSuperQuery="handleSuperQuery"></j-super-query> -->
-      <a-dropdown v-if="selectedRowKeys.length > 0">
+      <!-- <a-dropdown v-if="selectedRowKeys.length > 0">
         <a-menu slot="overlay">
           <a-menu-item key="1" @click="batchDel"><a-icon type="delete"/>删除</a-menu-item>
         </a-menu> 
         <a-button style="margin-left: 8px"> 批量操作 <a-icon type="down" /></a-button>
-      </a-dropdown>
+      </a-dropdown> -->
     </div>
 
     <!-- table区域-begin --> 
     <!-- table区域-begin -->
     <div>
-      <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
+      <!-- <div class="ant-alert ant-alert-info" style="margin-bottom: 16px;">
         <i class="anticon anticon-info-circle ant-alert-icon"></i> 已选择 <a style="font-weight: 600">{{ selectedRowKeys.length }}</a>项
         <a style="margin-left: 24px" @click="onClearSelected">清空</a>
-      </div>
+      </div> -->
 
       <a-table
         ref="table"
@@ -72,8 +73,8 @@
           <a @click="handleTodayPeople(record)">今日发展人数（{{record.todayNum}}）</a>
           <a-divider type="vertical" />
           <a @click="handleAllPeople(record)">总发展人数（{{record.allNum}}）</a>
-          <!-- <a-divider type="vertical" />
-          <a @click="handleDetail(record)">图片详情</a> -->
+          <a-divider type="vertical" />
+          <a @click="handleDetail(record)">图片详情</a>
           <!-- <a-dropdown>
             <a class="ant-dropdown-link">更多 <a-icon type="down" /></a>
             <a-menu slot="overlay">
@@ -215,6 +216,10 @@
       //     query:{username:this.$store.getters.userInfo.username}
       //   })
       // },
+      // 返回上一个页面
+      goOff(){
+        this.$router.go(-1);
+      },
       handleTodayPeople(record){
         console.log(record.openId,'this.$store.getters.userInfo.openId')
         this.$router.push({

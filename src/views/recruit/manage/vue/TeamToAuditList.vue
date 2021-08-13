@@ -12,6 +12,7 @@
     <!-- 操作按钮区域 -->
     <div class="table-operator">
       <!-- <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button> -->
+      <a-button @click="goOff()" type="primary">返回</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('招生咨询')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
         <a-button type="primary" icon="import">导入</a-button>
@@ -77,8 +78,8 @@
           <a-popconfirm title="确定要审核拒绝吗?" @confirm="() => handleNo(record.id)">
             <a>审核拒绝</a>
           </a-popconfirm>
-          <!-- <a-divider type="vertical" />
-          <a @click="handleDetail(record)">图片详情</a> -->
+          <a-divider type="vertical" />
+          <a @click="handleDetail(record)">图片详情</a>
            <!-- <a-divider type="vertical" /> -->
           <!-- <a @click="handleEdit(record)">审核拒绝</a> -->
 
@@ -218,6 +219,10 @@
       },
     },
     methods: {
+      // 返回上一个页面
+      goOff(){
+        this.$router.go(-1);
+      },
       initDictConfig(){
       },
       getSuperFieldList(){
