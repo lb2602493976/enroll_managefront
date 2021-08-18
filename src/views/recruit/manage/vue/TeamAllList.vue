@@ -77,8 +77,8 @@
           <a-popconfirm title="确定要审核拒绝吗?" @confirm="() => handleNo(record.id)">
             <a>审核拒绝</a>
           </a-popconfirm>
-          <!-- <a-divider type="vertical" />
-          <a @click="handleDetail(record)">图片详情</a> -->
+          <a-divider type="vertical" />
+          <a @click="handleDetail(record)">图片详情</a>
            <!-- <a-divider type="vertical" /> -->
           <!-- <a @click="handleEdit(record)">审核拒绝</a> -->
 
