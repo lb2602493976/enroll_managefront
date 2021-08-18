@@ -68,7 +68,16 @@
           add: "/manage/admissionsTeam/add",
           edit: "/manage/admissionsTeam/edit",
           queryById: "/manage/admissionsTeam/queryById"
-        }
+        },
+        validatorRules: {
+           teamName: [
+              { required: true, message: '请输入团队名称!'},
+           ],
+           territory: [
+              { required: true, message: '请输入选择地区!'},
+           ]
+           
+        },
       }
     },
     computed: {

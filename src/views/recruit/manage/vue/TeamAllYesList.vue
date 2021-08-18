@@ -67,7 +67,7 @@
           </a-button>
         </template>
 
-        <!-- <span slot="action" slot-scope="text, record"> -->
+        <span slot="action" slot-scope="text, record">
           <!-- 0：待审核，1：审核通过， 2：审核拒绝 */ -->
           <!-- <a v-if="status" @click="handleEdit(record)">审核</a> -->
           <!-- <a-popconfirm title="确定要审核通过吗?" @confirm="() => handleYes(record.id)">
@@ -77,8 +77,8 @@
           <a-popconfirm title="确定要审核拒绝吗?" @confirm="() => handleNo(record.id)">
             <a>审核拒绝</a>
           </a-popconfirm> -->
-          <!-- <a-divider type="vertical" />
-          <a @click="handleDetail(record)">图片详情</a> -->
+          <!-- <a-divider type="vertical" /> -->
+          <a @click="handleDetail(record)">图片详情</a>
            <!-- <a-divider type="vertical" /> -->
           <!-- <a @click="handleEdit(record)">审核拒绝</a> -->
 
@@ -96,7 +96,7 @@
               </a-menu-item>
             </a-menu>
           </a-dropdown> -->
-        <!-- </span> -->
+        </span>
 
       </a-table>
     </div>
@@ -188,14 +188,14 @@
           //   dataIndex:'openId'
           // },
           
-          // {
-          //   title: '操作',
-          //   dataIndex: 'action',
-          //   align:"center",
-          //   fixed:"right",
-          //   width:147,
-          //   scopedSlots: { customRender: 'action' }
-          // }
+          {
+            title: '操作',
+            dataIndex: 'action',
+            align:"center",
+            fixed:"right",
+            width:147,
+            scopedSlots: { customRender: 'action' }
+          }
         ],
         url: {
           list: "/manage/teamPersonnel/getCheckAdminList",
