@@ -2,6 +2,9 @@ import { getAction, deleteAction, putAction, postAction, httpAction } from '@/ap
 import Vue from 'vue'
 import {UI_CACHE_DB_DICT_DATA } from "@/store/mutation-types"
 
+//新增
+const addMajorQuestion=(params)=>getAction('/manage/recruitMajorInfo/list',params);
+
 //角色管理
 const addRole = (params)=>postAction("/sys/role/add",params);
 const editRole = (params)=>putAction("/sys/role/edit",params);
@@ -162,7 +165,8 @@ export {
   queryMyDepartTreeList,
   getUserNoticeInfo,
   getDictItemsFromCache,
-  getDictOne
+  getDictOne,
+  addMajorQuestion
 }
 
 
