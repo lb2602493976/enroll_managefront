@@ -3,6 +3,14 @@
     <j-form-container :disabled="formDisabled">
       <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
         <a-row>
+          
+           <a-col :span="24" >
+            <a-form-model-item label="问题排序" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sort">
+              <!-- <a-input v-model="model.sort" placeholder="请输入排序数字" :maxLength="100" ></a-input> -->
+              <a-input-number  placeholder="请输入排序数字" v-model="model.sort" :min="1" :max="100"  />
+            </a-form-model-item>
+          </a-col>
+
           <a-col :span="24" >
             <a-form-model-item label="问题类型" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="type">
               <j-dict-select-tag type="list" v-model="model.type" dictCode="ai_types" placeholder="请选择问题类型" />

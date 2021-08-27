@@ -40,6 +40,7 @@
 
     <!-- 操作按钮区域 -->
     <div class="table-operator">
+      
       <a-button @click="handleAdd" type="primary" icon="plus">新增</a-button>
       <!-- <a-button type="primary" icon="download" @click="handleExportXls('新闻资讯')">导出</a-button>
       <a-upload name="file" :showUploadList="false" :multiple="false" :headers="tokenHeader" :action="importExcelUrl" @change="handleImportExcel">
@@ -97,6 +98,10 @@
         </template>
 
         <span slot="action" slot-scope="text, record">
+          <!-- <a @click="handleTop(record.id)>取消置顶</a> -->
+          <a-divider type="vertical" />
+          <a @click="handleTop(record)">{{record.ifTop==0?'置顶':'取消置顶' }} </a>
+          <a-divider type="vertical" />
           <a @click="handleEdit(record)">编辑</a>
           <!-- <a @click="toModulePage(record.id)" >设置内容</a> -->
           <a-divider type="vertical" />
@@ -127,7 +132,7 @@
 
   import '@/assets/less/TableExpand.less'
   import { mixinDevice } from '@/utils/mixin'
-  import { JeecgListMixin } from '@/mixins/JeecgListMixin'
+  import { JeecgListMixin } from '@/mixins/JeecgListMixinNewsInformationList'
   import { getDictOne } from '@/api/api'
   // import { treeList } from '@/api/api.js'
   // import RecruitModuleModal from './modules/RecruitModuleModal'
@@ -199,6 +204,7 @@
           }
         ],
         url: {
+          top:"/manage1/newsInformation/setTop",
           list: "/manage1/newsInformation/list",
           delete: "/manage1/newsInformation/delete",
           deleteBatch: "/manage1/newsInformation/deleteBatch",
