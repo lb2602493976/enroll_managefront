@@ -125,13 +125,13 @@
         validatorRules: {
           picUrl: [{ required: true, message: '请上传图片!' }],
           picTitle: [{ required: true, message: '请输入标题!' }],
-          picHref: [
-            { required: false, message: '请输入网址!' },
-            {
-              pattern: /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-.,@?^=%&:\/~+#]*[\w\-@?^=%&\/~+#])?$/,
-              message: '请输入正确的网址!',
-            },
-          ],
+          // picHref: [
+          //   { required: false, message: '请输入网址!' },
+          //   {
+          //     pattern: /^((ht|f)tps?):\/\/[\w\-]+(\.[\w\-]+)+([\w\-.,@?^=%&:\/~+#]*[\w\-@?^=%&\/~+#])?$/,
+          //     message: '请输入正确的网址!',
+          //   },
+          // ],
           appid: [{ required: false, message: '请输入小程序的appid!' }],
           moduleId: [{ required: false, message: '请选择宣传模块!' }],
           detailId: [{ required: false, message: '请选择二级模块!' }],
