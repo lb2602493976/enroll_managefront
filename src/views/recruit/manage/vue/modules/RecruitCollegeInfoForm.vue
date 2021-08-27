@@ -115,9 +115,9 @@ import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.v
            ciContent: [
               { required: true, message: '请输入院系介绍!'},
            ],
-           icon: [
-              { required: true, message: '请选择icon!'},
-           ],
+          //  icon: [
+          //     { required: true, message: '请选择icon!'},
+          //  ],
         },
         url: {
           add: "/manage/recruitCollegeInfo/add",
@@ -150,12 +150,12 @@ import JImageLogoUpload from '../../../../../components/jeecg/JImageLogoUpload.v
       beforeUpload(file) {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
-          this.$message.error('You can only upload JPG file!');
+          this.$message.error('上传图片格式不对!');
         }
         const isLt2M = file.size / 1024 / 1024 < 2;
         console.log(isLt2M,'2M')
-        if (!isLt2M) {
-          this.$message.error('Image must smaller than 2MB!');
+        if (isLt2M===false) {
+          this.$message.error('图片大小不能大于 2MB!');
         }
         return isJpgOrPng && isLt2M;
       },
