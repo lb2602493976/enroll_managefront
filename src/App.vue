@@ -37,8 +37,15 @@
     }
   }
 </script>
-<style>
+<style lang="less">
   #app {
     height: 100%;
+  }
+  .textEllipsis(@line:1){
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: line;
+    -webkit-box-orient: vertical;
   }
 </style>
