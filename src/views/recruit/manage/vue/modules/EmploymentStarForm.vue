@@ -43,6 +43,22 @@
               <a-input-number v-model="model.sort" placeholder="请输入排序" style="width: 100%" />
             </a-form-model-item>
           </a-col>
+
+          <a-col :span="24">
+            <a-form-model-item label="所属专业" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="majorId">
+              <!-- <a-input v-model="model.majorId" placeholder="请输入专业id"  ></a-input> -->
+              <a-select @change="handleSelectChange" v-model="model.majorId" placeholder="请选择专业">
+                <a-select-option
+                  v-for="(item,index) of newsList" 
+                  :key="index"
+                  :value="item.itemValue"
+                  :label="item.itemText"
+                >
+                  {{item.itemText}}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-col>
           <!-- <a-col :span="24">
             <a-form-model-item label="租户id" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="tenantId">
               <a-input v-model="model.tenantId" placeholder="请输入租户id"  ></a-input>
@@ -57,6 +73,7 @@
 <script>
 
   import { httpAction, getAction } from '@/api/manage'
+  import { addMajorQuestion } from '@/api/api'
   import { validateDuplicateValue } from '@/utils/util'
 
   export default {
@@ -73,6 +90,7 @@
     },
     data () {
       return {
+        newsList:[],  //就业明星
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
         model:{
@@ -107,8 +125,17 @@
     created () {
        //备份model原始值
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
+      addMajorQuestion({pageSize:999,pageNo:1}).then(res=>{
+        this.newsList=res.result.records.map(item=>{
+          return {itemValue:item.id,itemText:item.miName}
+        })
+        console.log(this.newsList,'res')
+      })
     },
     methods: {
+      handleSelectChange(val){
+        console.log(val,'专业值')
+      },
       // 上传
       handleChange(info) {
         if (info.file.status === 'uploading') {

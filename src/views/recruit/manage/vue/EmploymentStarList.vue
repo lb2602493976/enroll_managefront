@@ -142,11 +142,11 @@
             align:"center",
             dataIndex: 'sort'
           },
-          // {
-          //   title:'租户id',
-          //   align:"center",
-          //   dataIndex: 'tenantId'
-          // },
+          {
+            title:'所属专业',
+            align:"center",
+            dataIndex: 'majorId'
+          },
           {
             title: '操作',
             dataIndex: 'action',

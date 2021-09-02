@@ -47,6 +47,11 @@
                     <j-dict-select-tag type="list" v-model="model.collegeId" dictCode="recruit_college_info,ci_name,id" placeholder="请选择所属院系" />
                   </a-form-model-item>
                 </a-col>
+                <a-col :span="24">
+                  <a-form-model-item label="就业方向" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="employment">
+                    <a-input v-model="model.employment" placeholder="请输入就业方向" :maxLength="20" ></a-input>
+                  </a-form-model-item>
+                </a-col>
               </a-row>
             </a-form-model>
           </j-form-container>

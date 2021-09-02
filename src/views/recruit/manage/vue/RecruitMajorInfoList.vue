@@ -138,6 +138,11 @@
             align:"center",
             dataIndex: 'collegeId_dictText'
           },
+          {
+            title:'就业方向',
+            align:"center",
+            dataIndex: 'employment'
+          },
           
           {
             title: '操作',
