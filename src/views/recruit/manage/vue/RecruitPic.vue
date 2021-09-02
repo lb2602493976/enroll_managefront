@@ -73,6 +73,13 @@
       @ok="handleOkTab"
       @cancel="handleCancelTab"
     >
+      <a-form-model-item label="图片类型" prop="type">
+        <a-select v-model="type" style="width: 100%" placeholder="请选择图片类型">
+          <a-select-option v-for="item of imgTypes" :key="item.id" :value="item.itemValue">
+            {{ item.itemText }}
+          </a-select-option>
+        </a-select>
+      </a-form-model-item>
       <a-input v-model="ptName" placeholder="请输入标签名称" :maxLength="10" ></a-input>
     </a-modal>
 
@@ -127,6 +134,7 @@
 
 <script>
   import moment from 'moment'
+  import { getDictOne } from '@/api/api'
   import PageLayout from '@/components/page/PageLayout'
   import STable from '@/components/table/'
   import DetailList from '@/components/tools/DetailList'
@@ -170,6 +178,8 @@
         uploadFileList:[], // 上传图片
         imgList : [],
         showPic : false,
+        imgTypes:[], //图片类型
+        type:'', //图片类型
         saveParm:{
           picTime:undefined,
           picUrl:[],
@@ -180,6 +190,11 @@
     created(){
       this.getTabsList()
       // this.getImageList()
+    },
+    mounted(){
+      getDictOne({dictCode:'image_types'}).then(res=>{
+        this.imgTypes = res.result
+      })
     },
     methods: {
       // 编辑标签
@@ -356,7 +371,8 @@
         }else if(that.stus === 1){
           axios
             .post(`/manage/recruitPictureType/add`,{
-              ptName:this.ptName
+              ptName:this.ptName,
+              type:this.type
             })
             .then((res) => {
               if(res.result === '添加成功！'){
