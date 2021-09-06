@@ -50,6 +50,22 @@
             </a-form-model-item>
           </a-col>
 
+          <a-col :span="24">
+            <a-form-model-item label="所属专业" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="majorId">
+              <!-- <a-input v-model="model.majorId" placeholder="请输入专业id"  ></a-input> -->
+              <a-select @change="handleSelectChange1" v-model="model.majorId" placeholder="请选择专业">
+                <a-select-option
+                  v-for="(item,index) of majorList" 
+                  :key="index"
+                  :value="item.itemValue"
+                  :label="item.itemText"
+                >
+                  {{item.itemText}}
+                </a-select-option>
+              </a-select>
+            </a-form-model-item>
+          </a-col>
+
           <a-col :span="24" >
             <a-form-model-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="title">
               <!-- <j-date placeholder="请输入标题" v-model="model.title"  style="width: 100%" /> -->
@@ -128,7 +144,7 @@
 <script>
 
   import { httpAction, getAction } from '@/api/manage'
-  import { getDictOne } from '@/api/api'
+  import { getDictOne ,addMajorQuestion } from '@/api/api'
   import { validateDuplicateValue } from '@/utils/util'
 
   export default {
@@ -148,6 +164,7 @@
         BASE_API:window._CONFIG['domianURL'],
         loading : false,
         newsList:[],  //新闻资讯
+        majorList:[],  //专业下拉
         model:{
           content:''
          },
@@ -202,10 +219,19 @@
         this.newsList=res.result
         console.log(res.result,'res')
       })
+      addMajorQuestion({pageSize:999,pageNo:1}).then(res=>{
+        this.majorList=res.result.records.map(item=>{
+          return {itemValue:item.id,itemText:item.miName}
+        })
+
+      })
     },
     methods: {
       handleSelectChange(val){
         console.log(val,'新闻资讯类型')
+      },
+      handleSelectChange1(){
+        console.log(val,'专业值')
       },
       handleChange(info) {
         if (info.file.status === 'uploading') {

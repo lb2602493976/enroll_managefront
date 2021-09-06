@@ -180,6 +180,11 @@
             dataIndex: 'type'
           },
           {
+            title:'所属专业',
+            align:"center",
+            dataIndex: 'majorId'
+          },
+          {
             title:'标题',
             align:"center",
             dataIndex: 'title'
