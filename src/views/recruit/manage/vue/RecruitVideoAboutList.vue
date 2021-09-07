@@ -115,15 +115,20 @@
         description: '宣传视频表管理页面',
         // 表头
         columns: [
+          // {
+          //   title: '序号',
+          //   dataIndex: '',
+          //   key:'rowIndex',
+          //   width:60,
+          //   align:"center",
+          //   customRender:function (t,r,index) {
+          //     return parseInt(index)+1;
+          //   }
+          // },
           {
-            title: '序号',
-            dataIndex: '',
-            key:'rowIndex',
-            width:60,
+            title:'排序',
             align:"center",
-            customRender:function (t,r,index) {
-              return parseInt(index)+1;
-            }
+            dataIndex: 'sort'
           },
           {
             title:'视频封面',

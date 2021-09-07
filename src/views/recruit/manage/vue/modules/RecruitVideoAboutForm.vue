@@ -7,6 +7,11 @@
             <a-form-model ref="form" :model="model" :rules="validatorRules" slot="detail">
               <a-row>
                 <a-col :span="24">
+                  <a-form-model-item label="排序" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="sort">
+                    <a-input-number v-model="model.sort" placeholder="请输入排序" style="width: 100%" />
+                  </a-form-model-item>
+                </a-col>
+                <a-col :span="24">
                   <a-form-model-item label="标题" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="vaTitle">
                     <a-input v-model="model.vaTitle" placeholder="请输入标题（不超过20个字）"  :maxLength="20"></a-input>
                   </a-form-model-item>
@@ -134,6 +139,13 @@
            collegeId: [
               { required: true, message: '请选择所属院系!'},
            ],
+           sort:[{required:false,validator:(rule,value,callback)=>{
+             let reg=/^[0-9]\d*$/
+             if(!reg.test(value)){
+               return callback(new Error('序号只能为正整数'))
+             }
+              return callback();
+           }}],
           //  vaCover: [
           //     { required: true, message: '请上传视频封面!'},
           //  ],
@@ -164,6 +176,12 @@
       this.modelDefault = JSON.parse(JSON.stringify(this.model));
     },
     methods: {
+      // handleConfirm(rule,value,callbakck){
+      //   console.log(rule,'rule')
+      //   console.log(value,'value')
+      //   console.log(callbakck,'callbakck')
+      //   callbakck()
+      // },
       //上传视频
       handleChangeVideo(info){
         if (info.file.status === 'uploading') {
