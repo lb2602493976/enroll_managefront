@@ -223,13 +223,13 @@ export default {
             return parseInt(index) + 1
           },
         },
-        // {
-        //   title: '用户账号',
-        //   align: "center",
-        //   dataIndex: 'username',
-        //   width: 120,
-        //   sorter: true
-        // },
+        {
+          title: '用户账号',
+          align: "center",
+          dataIndex: 'username',
+          width: 120,
+          sorter: true
+        },
         {
           title: '用户姓名',
           align: 'center',
