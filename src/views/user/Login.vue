@@ -5,13 +5,14 @@
       <!-- <img style="border-top-left-radius:100px;border-bottom-left-radius:100px;" src="https://file.yunquewang.cn/group1/default/20210625/11/34/4/format_bg.jpg" width="100%"  height="100%" /> -->
     <!-- </div> -->
     <!-- <div style="width: 500px;float: left;padding: 15px;margin: 7% auto;"> -->
-    <div style="width: 600px;padding: 50px;">
+    <div style="width: 600px;padding: 50px;background: rgba(0,0,0,0.3);">
       <a-form :form="form" class="user-layout-login" ref="formLogin" id="formLogin">
+        <h2 style="text-align: center;">欢迎来到招生小程序系统管理平台</h2>
         <a-tabs
           :activeKey="customActiveKey"
           :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
           @change="handleTabClick">
-          <a-tab-pane key="tab1" tab="登录">
+          <a-tab-pane key="tab1" tab="请登录">
             <a-form-item>
               <a-input
                 size="large"
