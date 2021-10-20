@@ -2,6 +2,9 @@ import { getAction, deleteAction, putAction, postAction, httpAction } from '@/ap
 import Vue from 'vue'
 import {UI_CACHE_DB_DICT_DATA } from "@/store/mutation-types"
 
+// ceshiUrl
+// const ceshiUrl = (params)=>getAction("/sys/permission/list",params);
+
 //新增
 const addMajorQuestion=(params)=>getAction('/manage/recruitMajorInfo/list',params);
 
@@ -166,7 +169,7 @@ export {
   getUserNoticeInfo,
   getDictItemsFromCache,
   getDictOne,
-  addMajorQuestion
+  addMajorQuestion,
 }
 
 
