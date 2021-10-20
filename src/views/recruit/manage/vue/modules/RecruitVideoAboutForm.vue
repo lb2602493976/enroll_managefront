@@ -47,7 +47,7 @@
                 </a-col>
                 <a-col :span="24">
                   <a-form-model-item label="视频封面" :labelCol="labelCol" :wrapperCol="wrapperCol" prop="vaCover">
-                    <!-- <j-image-logo-upload isMultiple  v-model="model.vaCover" ></j-image-logo-upload> -->
+                    <!-- face-32-222-jump<j-image-logo-upload isMultiple  v-model="model.vaCover" ></j-image-logo-upload> -->
                     <a-upload
                         style="width: 128px;height: 128px;"
                         name="file"
